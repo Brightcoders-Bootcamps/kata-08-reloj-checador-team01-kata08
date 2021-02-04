@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Private number:</strong>
+  <%= @attendace.private_number %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @attendace.date %>
+</p>
+
+<p>
+  <strong>Time:</strong>
+  <%= @attendace.time %>
+</p>
+
+<%= link_to 'Edit', edit_attendace_path(@attendace) %> |
+<%= link_to 'Back', attendaces_path %>

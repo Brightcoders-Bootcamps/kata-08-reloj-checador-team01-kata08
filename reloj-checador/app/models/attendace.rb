@@ -1,0 +1,2 @@
+class Attendace < ApplicationRecord
+end
