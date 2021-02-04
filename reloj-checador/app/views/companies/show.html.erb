@@ -10,5 +10,14 @@
   <%= @company.address %>
 </p>
 
+<p>
+  <strong>Employees</strong>
+  <p>
+    <% @company.employees.all.each do |employee| %>
+      <a href="<%= employee_path(employee) %>"><%= employee.name %> <%= employee.lastname %></a>
+    <% end %>
+  </p>
+</p>
+
 <%= link_to 'Edit', edit_company_path(@company) %> |
 <%= link_to 'Back', companies_path %>
