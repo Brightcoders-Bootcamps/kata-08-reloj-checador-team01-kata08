@@ -7,8 +7,7 @@ class EmployeesController < ApplicationController
   end
 
   # GET /employees/1 or /employees/1.json
-  def show
-  end
+  def show; end
 
   # GET /employees/new
   def new
@@ -16,8 +15,7 @@ class EmployeesController < ApplicationController
   end
 
   # GET /employees/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /employees or /employees.json
   def create
@@ -50,7 +48,7 @@ class EmployeesController < ApplicationController
   # DELETE /employees/1 or /employees/1.json
   def destroy
     # @employee.destroy
-    @employee.active = "false"
+    @employee.active = false
     if @employee.update
       respond_to do |format|
         format.html { redirect_to employees_url, notice: "Employee was successfully inactivated." }
