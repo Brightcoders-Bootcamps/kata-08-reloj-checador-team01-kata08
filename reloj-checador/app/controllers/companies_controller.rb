@@ -49,10 +49,17 @@ class CompaniesController < ApplicationController
 
   # DELETE /companies/1 or /companies/1.json
   def destroy
-    @company.destroy
-    respond_to do |format|
-      format.html { redirect_to companies_url, notice: "Company was successfully destroyed." }
-      format.json { head :no_content }
+    if @company.employees.count == 0
+      @company.destroy
+      respond_to do |format|
+        format.html { redirect_to companies_url, notice: "Company was successfully destroyed." }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to companies_url, notice: "Company wasn't destroyed." }
+        format.json { head :no_content }
+      end
     end
   end
 
