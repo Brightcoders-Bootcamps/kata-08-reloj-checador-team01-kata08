@@ -1,3 +1,6 @@
+<% time = Time.new %>
+<%= time.strftime("%I:%M %p") %>
+<%= time.strftime("%d/%m/%Y") %>
 <%= form_with(model: attendace) do |form| %>
   <% if attendace.errors.any? %>
     <div id="error_explanation">
