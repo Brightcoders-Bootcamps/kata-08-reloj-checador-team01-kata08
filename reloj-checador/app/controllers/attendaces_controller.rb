@@ -22,6 +22,9 @@ class AttendacesController < ApplicationController
   # POST /attendaces or /attendaces.json
   def create
     @attendace = Attendace.new(attendace_params)
+    tim = Time.new
+    @attendace.date = tim.strftime("%Y-%m-%d")
+    @attendace.time = tim.strftime("%I:%M:%S")
 
     respond_to do |format|
       if @attendace.save

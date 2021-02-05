@@ -1,6 +1,6 @@
 <% time = Time.new %>
-<%= time.strftime("%I:%M %p") %>
-<%= time.strftime("%d/%m/%Y") %>
+<%= time.strftime("%I:%M:%S") %>
+<%= time.strftime("%Y-%m-%d") %>
 <%= form_with(model: attendace) do |form| %>
   <% if attendace.errors.any? %>
     <div id="error_explanation">
@@ -19,15 +19,7 @@
     <%= form.text_field :private_number %>
   </div>
 
-  <div class="field">
-    <%= form.label :date %>
-    <%= form.date_select :date %>
-  </div>
-
-  <div class="field">
-    <%= form.label :time %>
-    <%= form.time_select :time %>
-  </div>
+  
 
   <div class="actions">
     <%= form.submit %>
