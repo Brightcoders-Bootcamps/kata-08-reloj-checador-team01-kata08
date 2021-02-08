@@ -1,3 +1,32 @@
 // Place all the styles related to the employees controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+.container{
+    width: 100%;
+    min-height: 100vh;
+}
+
+.content{
+    width: 80%;
+    margin: auto;
+}
+
+.title{
+    text-align: center;
+    margin: 2rem;
+}
+
+table{
+    margin: 2rem 0rem 2rem 0rem;
+    th{
+      width: 8rem;
+      text-align: left;
+      
+    }
+
+    th, td{
+      padding: .5rem 0rem .5rem 0rem;
+    }
+
+}
+
