@@ -1,40 +1,82 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Email:</strong>
-  <%= @employee.email %>
-</p>
+<div class="container card p-4">
+  <h1 Class="text-center"> Employee <%= @employee.name %></h1>
+  <div class="row">
+    <div class="list-group col-sm-12 col-lg-6 p-4">
+      <h2 class="text-center"> General info</h3>
+      <p class="list-group-item">
+        <strong>Email:</strong>
+        <%= @employee.email %>
+      </p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @employee.name %>
-</p>
+      <p class="list-group-item">
+        <strong>Name:</strong>
+        <%= @employee.name %>
+      </p>
 
-<p>
-  <strong>Lastname:</strong>
-  <%= @employee.lastname %>
-</p>
+      <p class="list-group-item">
+        <strong>Lastname:</strong>
+        <%= @employee.lastname %>
+      </p>
 
-<p>
-  <strong>Position:</strong>
-  <%= @employee.position %>
-</p>
+      <p class="list-group-item">
+        <strong>Position:</strong>
+        <%= @employee.position %>
+      </p>
 
-<p>
-  <strong>Private number:</strong>
-  <%= @employee.private_number %>
-</p>
+      <p class="list-group-item">
+        <strong>Private number:</strong>
+        <%= @employee.private_number %>
+      </p>
 
-<p>
-  <strong>Active:</strong>
-  <%= @employee.active %>
-</p>
+      <p class="list-group-item">
+        <strong>Active:</strong>
+        <%= @employee.active %>
+      </p>
 
-<p>
-  <strong>Company:</strong>
-  <% company = @employee.company %>
-  <a href="<%= company_path(company) %>"><%= company.name %></a>
-</p>
-
-<%= link_to 'Edit', edit_employee_path(@employee) %> |
-<%= link_to 'Back', employees_path %>
+      <p class="list-group-item">
+        <strong>Company:</strong>
+        <% company = @employee.company %>
+        <a href="<%= company_path(company) %>"><%= company.name %></a>
+      </p>
+    </div>
+    <div class="col-sm-12 col-lg-6 p-4">
+      <h2 class="text-center"> Attendance </h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Id Attendance</th>
+            <th scope="col">Check in</th>
+            <th scope="col">Check out</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>Larry</td>
+            <td>the Bird</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="mt-5">
+    <%= link_to employees_path, :class => "btn btn-info" do%>
+      <i class="fas fa-arrow-left"> </i> Back
+    <% end %>
+    <%= link_to edit_employee_path(@employee), :class => "btn btn-info" do%>
+      <i class="fas fa-user-edit"></i> Edit
+    <% end %>
+  </div>
+</div>
