@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">CHECADOR</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="<%= companies_path %>">SUCURSALES <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">EMPLEADOS</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                INFORMES
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Attendance by day</a>
+                <a class="dropdown-item" href="#">Average time employees checked in/out by month</a>
+                <a class="dropdown-item" href="#">Absence report by month</a>
+                </div>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav mr-md-1">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <%= current_admin&.name %>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <%= link_to "Log out", destroy_admin_session_path, method: :delete %>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>

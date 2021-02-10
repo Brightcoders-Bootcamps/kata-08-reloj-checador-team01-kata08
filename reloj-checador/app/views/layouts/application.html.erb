@@ -11,6 +11,12 @@
   </head>
 
   <body>
-    <%= yield %>
+    <% if admin_signed_in? %>
+      <%= render "layouts/navbar" %>
+      <%= yield %>
+    <% else %>
+      <%= yield %>
+    <% end %>
+    
   </body>
 </html>
