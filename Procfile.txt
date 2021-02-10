@@ -1,0 +1,1 @@
+web: bundle exec reloj-checador/rails server -p $PORT

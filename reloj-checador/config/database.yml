@@ -23,9 +23,14 @@
 # production:
 #   <<: *default
 #   database: db/production.sqlite3
+
 default: &default
   adapter: postgresql
   encoding: unicode
+  host: <%= ENV['host_postgres'] %>
+  port: <%= ENV['port_postgres'] %>
+  username: <%= ENV['username_postgres'] %>
+  password: <%= ENV['password_postgres'] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
@@ -39,5 +44,5 @@ test:
 production:
   <<: *default
   database: reloj_checador_production
-  username: username
-  password: <%= ENV['PROJECT_DATABASE_PASSWORD'] %>
+  username: registros
+  password: <%= ENV['REGISTROS_DATABASE_PASSWORD'] %>
