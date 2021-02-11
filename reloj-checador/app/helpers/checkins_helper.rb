@@ -1,4 +1,4 @@
-module ApplicationHelper
+module CheckinsHelper
   def flash_msg
     flash.each_with_object([]) do |(type, message), flash_messages|
       # p "Entre aqui #{message} #{type}"

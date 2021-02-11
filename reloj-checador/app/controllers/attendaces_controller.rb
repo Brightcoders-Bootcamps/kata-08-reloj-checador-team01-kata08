@@ -1,6 +1,6 @@
-class AttendacesController < ApplicationController
+class AttendacesController < CheckinsController
   before_action :set_attendace, only: %i[ show edit update destroy ]
-
+  before_action :redirect_to_new, except: [:new, :create]
   # GET /attendaces or /attendaces.json
   def index
     @attendaces = Attendace.all
@@ -25,15 +25,19 @@ class AttendacesController < ApplicationController
     tim = Time.new
     @attendace.date = tim.strftime("%Y-%m-%d")
     @attendace.time = tim.strftime("%I:%M:%S")
-
-    respond_to do |format|
+    employee = Employee.find_by(private_number: attendace_params[:private_number])
+    if !employee.nil?
       if @attendace.save
-        format.html { redirect_to @attendace, notice: "Attendace was successfully created." }
-        format.json { render :show, status: :created, location: @attendace }
+        check_type = @attendace.check_in == 1 ? "Check In" : "Check Out"
+        flash[:success] = "Employee #{employee.name} #{check_type} registered"
+        redirect_to new_attendace_path
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @attendace.errors, status: :unprocessable_entity }
+        flash[:error] = @attendace.errors.full_messages
+        render "new"
       end
+    else
+      flash[:error] = "Private number not found"
+      render "new"
     end
   end
 
@@ -60,13 +64,20 @@ class AttendacesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_attendace
-      @attendace = Attendace.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def attendace_params
-      params.require(:attendace).permit(:private_number, :date, :time)
+  # Use callbacks to share common setup or constraints between actions.
+  def set_attendace
+    @attendace = Attendace.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def attendace_params
+    params.require(:attendace).permit(:private_number, :date, :time)
+  end
+
+  def redirect_to_new
+    if !admin_signed_in?
+      redirect_to new_attendace_path
     end
+  end
 end
