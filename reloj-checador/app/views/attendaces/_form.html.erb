@@ -1,27 +1,27 @@
 <% time = Time.new %>
-<%= time.strftime("%I:%M:%S") %>
-<%= time.strftime("%Y-%m-%d") %>
-<%= form_with(model: attendace) do |form| %>
-  <% if attendace.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(attendace.errors.count, "error") %> prohibited this attendace from being saved:</h2>
+<div class="wrapper">
+  <div class="card p-2 card-time text-center">
+    <h1 class="clock-time" id="clock"><h1>
+    <%= time.strftime("%Y-%m-%d") %>
+  </div>
+  <%= form_with(model: attendace) do |form| %>
 
-      <ul>
-        <% attendace.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+    <div class="form-group input-attendance">
+      <%= form.label :private_number %>
+      <%= form.text_field :private_number, :class => "form-control" %>
     </div>
+
+    <%= form.submit :class => "btn btn-info btn-block btn-lg"%>
+
   <% end %>
+</div>
 
-  <div class="field">
-    <%= form.label :private_number %>
-    <%= form.text_field :private_number %>
-  </div>
-
+<script>
+  let clock = document.getElementById("clock")
   
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+  setInterval(() => {
+    let date = new Date()
+    clock.innerHTML = date.toLocaleTimeString();
+    console.log(date.toLocaleTimeString());
+  },1000);
+</script>
