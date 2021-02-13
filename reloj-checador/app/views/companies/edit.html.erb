@@ -1,6 +1,14 @@
-<h1>Editing Company</h1>
-
-<%= render 'form', company: @company %>
-
-<%= link_to 'Show', @company %> |
-<%= link_to 'Back', companies_path %>
+<div class="container">
+  <div class="card p-5">
+    <h1 class="card-title text-center">Editing Company</h1>
+    <div class="card-body p-5">
+      <%= render 'form', company: @company %>
+      <%= link_to companies_path, :class => "btn btn-info" do%>
+        <i class="fas fa-arrow-left"></i> Back
+      <% end %>
+      <%= link_to @company, :class => "btn btn-info" do%>
+        <i class="fas fa-eye"></i> Show
+      <% end %>
+    </div>
+  </div>
+</div>

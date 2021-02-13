@@ -1,23 +1,34 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @company.name %>
-</p>
+<div class="container card p-4">
+  <div class="content">
+    <div class="list-group p-4">
+      <h2 class="text-center p-4"> General info</h2>
+      <p class="list-group-item">
+        <strong>Name:</strong>
+        <%= @company.name %>
+      </p>
 
-<p>
-  <strong>Address:</strong>
-  <%= @company.address %>
-</p>
+      <p class="list-group-item">
+        <strong>Address:</strong>
+        <%= @company.address %>
+      </p>
 
-<p>
-  <strong>Employees</strong>
-  <p>
-    <% @company.employees.all.each do |employee| %>
-      <a href="<%= employee_path(employee) %>"><%= employee.name %> <%= employee.lastname %></a>
+      <p class="list-group-item">
+        <strong>Employees:</strong>
+        <% @company.employees.all.each do |employee| %>
+          <a href="<%= employee_path(employee) %>"><%= employee.name %> <%= employee.lastname %></a> |
+        <% end %>
+      </p>
+    </div>
+  </div>
+
+  <div class="mt-5">
+    <%= link_to companies_path, :class => "btn btn-info" do%>
+      <i class="fas fa-arrow-left"> </i> Back
     <% end %>
-  </p>
-</p>
-
-<%= link_to 'Edit', edit_company_path(@company) %> |
-<%= link_to 'Back', companies_path %>
+    <%= link_to edit_company_path(@company), :class => "btn btn-info" do%>
+      <i class="fas fa-user-edit"></i> Edit
+    <% end %>
+  </div>
+</div>
