@@ -1,18 +1,21 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="<%= attendaces_path %>">CHECADOR</a>
+    <a class="navbar-brand" href="<%= welcome_path %>">CHECADOR</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item" id="attendaces_li">
+                <a class="nav-link" href="<%= attendaces_path %>">ENTRADAS/SALIDAS</a>
+            </li>            
+            <li class="nav-item" id="companies_li">
                 <a class="nav-link" href="<%= companies_path %>">SUCURSALES <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">EMPLEADOS</a>
+            <li class="nav-item" id="employess_li">
+                <a class="nav-link" href="<%= employees_path %>">EMPLEADOS</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" id="reports_li">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 INFORMES
                 </a>
@@ -36,3 +39,24 @@
         </ul>
     </div>
 </nav>
+
+<div style="display: none">
+    <input type="hidden" readonly="true" value="<%= controller.controller_name %>" id="controller_name">
+</div>
+
+<script>
+    controller_page = (document.getElementById("controller_name").value).toString();
+    switch (controller_page) {
+        case 'attendaces':
+            document.getElementById("attendaces_li").classList.add('active');
+            break;
+        case 'companies':
+            document.getElementById("companies_li").classList.add('active');
+            break;
+        case 'employees':
+            document.getElementById("employess_li").classList.add('active');
+            break;
+        default:
+            break;
+    }
+</script>

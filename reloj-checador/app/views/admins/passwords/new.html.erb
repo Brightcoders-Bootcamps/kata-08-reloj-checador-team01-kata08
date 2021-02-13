@@ -1,16 +1,28 @@
-<h2>Forgot your password?</h2>
+<div class="container">
+    <div class="row justify-content-center align-items-center" style="height:100vh">
+        <div class="col-12 col-sm-12 col-md-4">
+            <div class="card" style="border-radius: 1rem; color: #807d77;">
+                <div class="card-body">
+                    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+                        <div class="form-group">
+                          <%= render "admins/shared/error_messages", resource: resource %>
+                        </div>
+                        <div class="form-group text-center" style="color: #807d77; margin-bottom: 2rem; margin-top: 2rem;">
+                          <h4>Forgot your password?</h4>
+                        </div>
+                        <div class="form-group">
+                            <%= f.text_field :email, autofocus: true, autocomplete: "email", class: "form-control text-center", style: "border-radius: 1rem; color: #807d77; margin-bottom: 2rem;", placeholder: "CORREO", required: "true" %>
+                        </div>
+                        <%= f.submit "RESETEAR CONTRASEÑA", class: "form-control text-center", value: "RESETEAR CONTRASEÑA", style: "color: #807d77; border-radius: 1rem;" %>
+                    <% end %>
+                </div>
+            </div>
+        </div>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "admins/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
-<% end %>
-
-<%= render "admins/shared/links" %>
+        <div class="col-12">
+          <div class="form-group">
+            <%= render "admins/shared/links" %>
+          </div>
+        </div>
+    </div>
+</div>

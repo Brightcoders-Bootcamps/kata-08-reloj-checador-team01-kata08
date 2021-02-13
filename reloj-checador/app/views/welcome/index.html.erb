@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="row justify-content-center align-items-center" style="height:75vh">
+        <div class="col-12 col-sm-12 col-md-8">
+            <div class="card" style="border-radius: 1rem; color: #807d77;">
+                <div class="card-body">    
+                    <div class="form-group text-center" style="color: #807d77; margin-bottom: 2rem; margin-top: 2rem;">
+                        <h1 id="clock"></h1>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group text-center" style="color: #807d77;">
+                <p><h3>BIENVENIDO AL SISTEMA DEL RELOJ CHECADOR</h3></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var renderTime = function () {
+        var time = new Date();
+        clock.textContent = `${time.getDate()}-${time.getMonth()+1}-${time.getFullYear()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`
+    };
+    renderTime();
+    setInterval(renderTime, 1000);
+</script>
