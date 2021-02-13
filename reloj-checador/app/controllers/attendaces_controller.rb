@@ -22,14 +22,10 @@ class AttendacesController < CheckinsController
   # POST /attendaces or /attendaces.json
   def create
     @attendace = Attendace.new(attendace_params)
-    tim = Time.new
-    @attendace.date = tim.strftime("%Y-%m-%d")
-    @attendace.time = tim.strftime("%I:%M:%S")
     employee = Employee.find_by(private_number: attendace_params[:private_number])
     if !employee.nil?
       if @attendace.save
-        check_type = @attendace.check_in == 1 ? "Check In" : "Check Out"
-        flash[:success] = "Employee #{employee.name} #{check_type} registered"
+        flash[:success] = "Employee #{employee.name} #{@attendace.check_type} registered"
         redirect_to new_attendace_path
       else
         flash[:error] = @attendace.errors.full_messages
@@ -43,23 +39,23 @@ class AttendacesController < CheckinsController
 
   # PATCH/PUT /attendaces/1 or /attendaces/1.json
   def update
-    respond_to do |format|
-      if @attendace.update(attendace_params)
-        format.html { redirect_to @attendace, notice: "Attendace was successfully updated." }
-        format.json { render :show, status: :ok, location: @attendace }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @attendace.errors, status: :unprocessable_entity }
-      end
+    if @attendace.update(attendace_params)
+      flash[:success] = "Attendace was successfully updated."
+      redirect_to @attendaces_path
+    else
+      flash[:error] = @attendace.errors.full_messages
+      render @attendaces_path
     end
   end
 
   # DELETE /attendaces/1 or /attendaces/1.json
   def destroy
-    @attendace.destroy
-    respond_to do |format|
-      format.html { redirect_to attendaces_url, notice: "Attendace was successfully destroyed." }
-      format.json { head :no_content }
+    if @attendace.destroy
+      flash[:success] = "Record deleted"
+      render "index"
+    else
+      flash[:error] = @attendace.errors.full_messages
+      render "index"
     end
   end
 

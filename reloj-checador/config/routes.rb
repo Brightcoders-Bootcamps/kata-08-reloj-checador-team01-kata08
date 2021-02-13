@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get "checkins/index"
   devise_for :admins, :controllers => { sessions: "admins/sessions",
                                         registrations: "admins/registrations",
                                         passwords: "admins/passwords",
@@ -7,6 +6,7 @@ Rails.application.routes.draw do
   resources :companies
 
   root "attendaces#index"
+  get '/checkin', to: 'checkins#index'
   resources :attendaces, except: [:edit, :delete]
   resources :companies
   resources :employees
