@@ -5,7 +5,10 @@
                 <div class="card-body">
                     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
                         <div class="form-group text-center" style="color: #807d77; margin-bottom: 2rem; margin-top: 2rem;">
-                          <h3>RELOJ CHECADOR</h3>
+                          <h4>RELOJ CHECADOR</h4>
+                        </div>
+                        <div class="form-group">
+                          <%= render "admins/shared/error_messages", resource: resource %>
                         </div>
                         <div class="form-group">
                             <%= f.text_field :email, autofocus: true, autocomplete: "email", class: "form-control text-center", style: "border-radius: 1rem; color: #807d77; margin-bottom: 2rem;", placeholder: "CORREO", required: "true" %>

@@ -20,9 +20,9 @@
                 INFORMES
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Attendance by day</a>
-                <a class="dropdown-item" href="#">Average time employees checked in/out by month</a>
-                <a class="dropdown-item" href="#">Absence report by month</a>
+                    <a class="dropdown-item" href="#">Attendance by day</a>
+                    <a class="dropdown-item" href="#">Average time employees checked in/out by month</a>
+                    <a class="dropdown-item" href="#">Absence report by month</a>
                 </div>
             </li>
         </ul>
@@ -30,10 +30,11 @@
         <ul class="navbar-nav mr-md-1">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <%= current_admin&.name %>
+                    <%= current_admin&.name %>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <%= link_to "Log out", destroy_admin_session_path, method: :delete %>
+                    <a class="dropdown-item" href="<%= edit_admin_registration_path %>">Editar Perfil</a>
+                    <%= link_to "Salir", destroy_admin_session_path, method: :delete, class: "dropdown-item"%>
                 </div>
             </li>
         </ul>
