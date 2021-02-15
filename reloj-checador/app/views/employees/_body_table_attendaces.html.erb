@@ -1,0 +1,8 @@
+<% @list_attendaces.each do |attendace|%>
+  <tr>
+    <th scope="row"><%= attendace.id%></th>
+    <td><%= attendace.date%> </td>
+    <td><%= attendace.time%> </td>
+    <td><%= attendace.check_type%> </td>    
+  </tr>
+<%end%>
