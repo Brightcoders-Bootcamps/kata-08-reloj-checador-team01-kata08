@@ -19,28 +19,7 @@
       </thead>
 
       <tbody>
-        <% @employees.each do |employee| %>
-          <tr>
-            <td scope="row"><%= employee.email %></td>
-            <td><%= employee.name %></td>
-            <td><%= employee.lastname %></td>
-            <td><%= employee.position %></td>
-            <td><%= employee.private_number %></td>
-            <td><%= employee.active %></td>
-            <td><%= employee.company_id %></td>
-            <td class="button-td">
-              <%= link_to employee, :class => "btn btn-success" do %>
-                <i class="fas fa-eye"></i>show 
-              <% end %>
-              <%= link_to edit_employee_path(employee), :class => "btn btn-warning" do%>
-                <i class="fas fa-user-edit"></i>Edit
-              <% end %>
-               <%= link_to employee, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" do %>
-                <i class="fas fa-trash"></i>Destroy
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
+        <%= render "body_table_employees", employee: @employee %>
       </tbody>
     </table>
   </div>
