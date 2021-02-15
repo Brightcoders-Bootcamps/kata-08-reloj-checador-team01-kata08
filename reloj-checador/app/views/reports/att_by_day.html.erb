@@ -1,0 +1,46 @@
+<div class="continer" style="margin-top: 2rem;">
+    <div class="row justify-content-center align-items-center">
+
+        <form action="">
+            <div class="col-12 col-sm-12 col-md-8">
+            </div>
+            <div class="col-12 col-sm-12 col-md-2">
+                <div class="form-group">
+                    <input type="date" class="form-control">
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-2">
+                <div class="form-group">
+                    <button class="btn btn-secondary btn-sm">BUSCAR</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="col-12 col-sm-12 col-md-10">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Nro. de entradas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @attendaces.each do |attendace| %>
+                            <tr>
+                                <td><%=  attendace.created_date %></td>
+                                <td><%=  attendace.date_count %></td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-10">
+            <div class="form-group">
+                <button class="btn btn-success btn-sm"><a href="#" style="color: #ffffff;">Descargar CSV</a></button>
+            </div>
+        </div>
+    </div>
+</div>
