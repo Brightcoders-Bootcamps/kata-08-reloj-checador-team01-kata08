@@ -7,7 +7,11 @@ class EmployeesController < ApplicationController
   end
 
   # GET /employees/1 or /employees/1.json
-  def show; end
+  def show
+    @list_attendaces = Employee.select("A.id, A.date, A.time, A.check_type").
+    joins("JOIN attendaces A ON employees.private_number = A.private_number").
+    where(private_number: @employee.private_number)
+  end
 
   # GET /employees/new
   def new
