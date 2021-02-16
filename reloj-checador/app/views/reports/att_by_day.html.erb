@@ -1,20 +1,19 @@
 <div class="continer" style="margin-top: 2rem;">
-    <div class="row justify-content-center align-items-center">
+    <div class="row justify-content-center align-items-center ml-1 ml-sm-0">
 
-        <form action="">
-            <div class="col-12 col-sm-12 col-md-8">
+        <div class="col-12 col-sm-12 col-md-7">
+            <h4>Cantidad de entradas/salidas por día</h4>
+        </div>
+        <div class="col-12 col-sm-12 col-md-2">
+            <div class="form-group">
+                <input type="date" class="form-control ml-0 ml-sm-4">
             </div>
-            <div class="col-12 col-sm-12 col-md-2">
-                <div class="form-group">
-                    <input type="date" class="form-control">
-                </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-1">
+            <div class="form-group">
+                <button class="btn btn-secondary btn-sm">BUSCAR</button>
             </div>
-            <div class="col-12 col-sm-12 col-md-2">
-                <div class="form-group">
-                    <button class="btn btn-secondary btn-sm">BUSCAR</button>
-                </div>
-            </div>
-        </form>
+        </div>
 
         <div class="col-12 col-sm-12 col-md-10">
             <div class="table-responsive">
@@ -22,19 +21,25 @@
                     <thead>
                         <tr>
                             <th>Fecha</th>
-                            <th>Nro. de entradas</th>
+                            <th>Nro. de entradas/salidas</th>
                         </tr>
                     </thead>
                     <tbody>
                         <% @attendaces.each do |attendace| %>
                             <tr>
-                                <td><%=  attendace.created_date %></td>
+                                <td><%=  attendace.date %></td>
                                 <td><%=  attendace.date_count %></td>
                             </tr>
                         <% end %>
                     </tbody>
                 </table>
+                <div class="media mb-4">
+                    <div class="media-body">
+                        <%= will_paginate @attendaces %>
+                    </div>
+                </div>
             </div>
+            
         </div>
 
         <div class="col-12 col-sm-12 col-md-10">

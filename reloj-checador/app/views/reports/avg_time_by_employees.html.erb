@@ -1,2 +1,53 @@
-<h1>Reports#avg_time_by_employees</h1>
-<p>Find me in app/views/reports/avg_time_by_employees.html.erb</p>
+<div class="continer" style="margin-top: 2rem;">
+    <div class="row justify-content-center align-items-center ml-1 ml-sm-0">
+
+        <div class="col-12 col-sm-12 col-md-7">
+            <h4 class="justify-content-center  align-items-center">Promedio horas entrada/salida por mes</h4>
+        </div>
+        <form class="col-12 col-sm-12 col-md-3">
+            <div class="row align-content-end ml-0 ml-sm-4">
+                <div class="form-group">
+                    <input type="date" class="form-control">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-secondary btn-sm ml-0 ml-3">BUSCAR</button>
+                </div>
+            </div>
+        </form>
+        <div class="col-12 col-sm-12 col-md-10">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Mes</th>
+                            <th>Año</th>
+                            <th>Hora promedio llegada</th>
+                            <th>Hora promedio salida</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @avg_time_by_employees.each do |avg| %>
+                            <tr>
+                                <td><%=  avg["mm"] %></td>
+                                <td><%=  avg["yyyy"].to_s.split(".0")[0] %></td>
+                                <td><%=  avg["time_in"] %></td>
+                                <td><%=  avg["time_out"] %></td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+                <div class="media mb-4">
+                    <div class="media-body">
+                        <%= will_paginate @avg_time_by_employees %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-10">
+            <div class="form-group">
+                <button class="btn btn-success btn-sm"><a href="#" style="color: #ffffff;">Descargar CSV</a></button>
+            </div>
+        </div>
+    </div>
+</div>
