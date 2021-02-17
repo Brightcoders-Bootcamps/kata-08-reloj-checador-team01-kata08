@@ -1,0 +1,37 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "ENTRADAS-SALIDAS") do |sheet|
+  header_style = sheet.styles.add_style("bg_color": "006c3b", "fg_color": "FFFFFF", b:true, alignment: { horizontal: :center, vertical: :center })
+  wrap_text    = wb.styles.add_style({ "alignment": { horizontal: :center, vertical: :center, "wrap_text": true }})
+  wrap_text_2  = wb.styles.add_style(:format_code => "@", "alignment": { horizontal: :center, vertical: :center, "wrap_text": true })
+
+  sheet.add_row [
+    'PROMEDIO HORAS ENTRADA/SALIDAS POR MES'
+  ], style: header_style
+
+  sheet.add_row [
+    ''
+  ]
+
+  # Create the header row
+  sheet.add_row [
+    'MES',
+    'AÑO',
+    'PROMEDIO HORA ENTRADA',
+    'PROMEDIO HORA SALIDA'
+  ], style: header_style
+  
+  # Create entries for each item
+  @avg_time_by_employees.each do |avg|
+    sheet.add_row [
+      "#{avg["mm"].to_s}", #A
+      "#{avg["yyyy"].to_s.split(".0")[0]}", #B
+      "#{avg["time_in"]}", #C
+      "#{avg["time_out"]}"  #D
+    ], style: [wrap_text,   #A
+               wrap_text,   #B
+               wrap_text,   #C
+               wrap_text    #D
+              ]
+  end
+end

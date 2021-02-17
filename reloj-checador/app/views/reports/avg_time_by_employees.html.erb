@@ -1,0 +1,54 @@
+<div class="continer justify-content-center align-items-center ml-1 ml-sm-0" style="margin-top: 2rem;">
+    <div class="col-12 col-sm-12 col-md-7">
+        <h4 class="justify-content-center  align-items-center">Promedio horas entrada/salida por mes</h4>
+    </div>
+        <div class="col-12 col-sm-12 col-md-3">
+    </div>
+    <!--form class="col-12 col-sm-12 col-md-3">
+        <div class="row align-content-end ml-0 ml-sm-4">
+            <div class="form-group">
+                <input type="date" class="form-control">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-secondary btn-sm ml-0 ml-3">BUSCAR</button>
+            </div>
+        </div>
+    </form-->
+    <div class="col-12 col-sm-12 col-md-10">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th style="text-align: center;">Mes</th>
+                        <th style="text-align: center;">Año</th>
+                        <th style="text-align: center;">Hora promedio llegada</th>
+                        <th style="text-align: center;">Hora promedio salida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @avg_time_by_employees.each do |avg| %>
+                        <tr>
+                            <td style="text-align: center;"><%=  avg["mm"] %></td>
+                            <td style="text-align: center;"><%=  avg["yyyy"].to_s.split(".0")[0] %></td>
+                            <td style="text-align: center;"><%=  avg["time_in"] %></td>
+                            <td style="text-align: center;"><%=  avg["time_out"] %></td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+            <div class="media mb-4">
+                <div class="media-body">
+                    <%= will_paginate @avg_time_by_employees %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-10">
+        <div class="form-group">
+            <form action="<%= reports_avg_time_by_employees_path(format: :xlsx) %>" method="get">
+                <button type="submit" class="btn btn-success btn-sm" style="color: #ffffff;">Descargar CSV</button>
+            </form>
+        </div>
+    </div>
+</div>
