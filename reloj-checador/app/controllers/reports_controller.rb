@@ -1,42 +1,64 @@
 class ReportsController < ApplicationController
   def att_by_day
-    @attendaces = Attendace.select("count(date) AS date_count, date")
-                           .group("date")
-                           .paginate(page: params[:page], per_page: 10)
+    respond_to do |format|
+      format.xlsx {
+        @attendaces = Attendace.att_by_day(nil, nil)
+        filename = "IN-OUT por día-#{DateTime.now.strftime("%d-%m-%Y %H:%M")}.xlsx"
+        response.headers["Content-Disposition"] = "attachment; filename=\"#{filename}\""
+      }
+      format.html {
+        @attendaces = Attendace.att_by_day(params[:page], 1)
+      }
+    end
   end
 
   def avg_time_by_employees
-    
-    sql = " SELECT  AVG_TIME_IN.mm,
-                AVG_TIME_IN.yyyy,
-                TO_CHAR(AVG_TIME_IN.TIME_IN,'HH12:MI:SS') AS TIME_IN,
-                TO_CHAR(AVG_TIME_OUT.TIME_OUT,'HH12:MI:SS') AS TIME_OUT
-            FROM
-            (
-              SELECT
-              TO_CHAR(ATT.date, 'Mon') AS mm,
-              EXTRACT(year FROM ATT.date) AS yyyy,
-              AVG(ATT.time) AS TIME_IN
-              FROM attendaces ATT
-              WHERE ATT.check_type = 'IN'
-              GROUP BY 1, 2
-            )AVG_TIME_IN,
-            (
-              SELECT TO_CHAR(date, 'Mon') AS mm,
-              EXTRACT(year FROM ATT.date) AS yyyy,
-              AVG(ATT.time) AS TIME_OUT
-              FROM attendaces ATT
-              WHERE ATT.check_type = 'OUT'
-              GROUP BY 1, 2
-            )AVG_TIME_OUT
-            GROUP BY
-            AVG_TIME_IN.mm,  AVG_TIME_OUT.mm, AVG_TIME_IN.yyyy,  AVG_TIME_OUT.yyyy,
-            AVG_TIME_IN.TIME_IN, AVG_TIME_OUT.TIME_OUT
-          "
-    @avg_time_by_employees = Attendace.paginate_by_sql(sql, page: params[:page], per_page: 10)
+    respond_to do |format|
+      format.xlsx {
+        @avg_time_by_employees = Attendace.avg_time_by_employees(nil, nil)
+        filename = "IN-OUT AVG por mes-#{DateTime.now.strftime("%d-%m-%Y %H:%M")}.xlsx"
+        response.headers["Content-Disposition"] = "attachment; filename=\"#{filename}\""
+      }
+      format.html {
+        @avg_time_by_employees = Attendace.avg_time_by_employees(params[:page], 10)
+      }
+    end
   end
 
   def absence_by_month
+    date = params[:date]
+    # respond_to do |format|
+    #   format.xlsx {
+    #     @abscenes = Attendace.absence_by_month(nil, nil, date)
+    #     @companies  = Employee.select("COUNT(DISTINCT employees.company_id), employees.company_id, COM.name")
+    #                                   .joins("RIGHT JOIN companies COM ON employees.company_id = COM.id")
+    #                                   .where(company_id: @abscenes.map { |att| att.com_id }.uniq)
+    #     filename = "IN-OUT AVG por mes-#{DateTime.now.strftime("%d-%m-%Y %H:%M")}.xlsx"
+    #     response.headers["Content-Disposition"] = "attachment; filename=\"#{filename}\""
+    #   }
+    #   format.html {
+    #     @abscenes = Attendace.absence_by_month(params[:page], 1, date)
+    #     @companies  = Employee.select("COUNT(DISTINCT employees.company_id), employees.company_id, COM.name")
+    #                                   .joins("RIGHT JOIN companies COM ON employees.company_id = COM.id")
+    #                                   .where(company_id: @abscenes.map { |att| att.com_id }.uniq)
+    #                                   .group("employees.company_id, COM.id")
+    #     p "@attendaces #{@abscenes.to_json}"
+    #   }
+
+    # end
+
+    # @abscenes = Attendace.select("COUNT(DISTINCT attendaces.private_number) AS PER_DATE_COUNT, attendaces.date, COM.name, COM.id AS com_id")
+    #   .joins("LEFT JOIN employees E ON attendaces.private_number = E.private_number")
+    #   .joins("LEFT JOIN companies COM ON E.company_id = COM.id")
+    #   .where("#{(!date.nil?) ? "attendaces.date = '#{date}'" : ""}")
+    #   .group("attendaces.date, E.company_id, COM.id, COM.name, E.id, attendaces.private_number")
+    #   .paginate(page: params[:page], per_page: 1)
     
+    @abscenes = Attendace.where("#{(!date.nil?) ? "attendaces.date = '#{date}'" : ""}")
+                         .select("attendaces.private_number, date, E.company_id, COUNT( CASE WHEN check_type = 'IN' THEN 1 END)")
+                         .group("attendaces.private_number, date, E.company_id")
+                         .joins("JOIN employees E ON E.private_number = attendaces.private_number")
+                         .paginate(page: params[:page], per_page: 1)
+    p "@abscenes.to_json #{@abscenes.to_json}"
   end
 end
