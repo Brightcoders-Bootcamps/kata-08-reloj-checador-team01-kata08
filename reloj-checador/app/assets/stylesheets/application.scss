@@ -14,3 +14,25 @@
  *= require_self
  */
 @import "bootstrap/scss/bootstrap";
+
+.btn{
+    i{
+        margin-right: .5rem;
+    }
+}
+
+.button-td{
+    display: flex;
+    flex-wrap: nowrap;
+
+    a, button{
+        margin-left: 1rem;
+    }
+    > :first-child{
+        margin-left: 0rem;
+    }
+}
+
+.message-error{
+    color: red;
+}
