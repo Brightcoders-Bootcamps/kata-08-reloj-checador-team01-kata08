@@ -34,7 +34,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="<%= edit_admin_registration_path %>">Editar Perfil</a>
-                    <%= link_to "Salir", destroy_admin_session_path, method: :delete, class: "dropdown-item"%>
+                    <%= button_to "Salir", destroy_admin_session_path, method: :delete, class: "dropdown-item"%>
                 </div>
             </li>
         </ul>
