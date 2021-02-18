@@ -1,25 +1,28 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="<%= attendaces_path %>">CHECADOR</a>
+    <a class="navbar-brand" href="<%= welcome_path %>">CHECADOR</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item" id="attendaces_li">
+                <a class="nav-link" href="<%= attendaces_path %>">ENTRADAS/SALIDAS</a>
+            </li>            
+            <li class="nav-item" id="companies_li">
                 <a class="nav-link" href="<%= companies_path %>">SUCURSALES <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">EMPLEADOS</a>
+            <li class="nav-item" id="employess_li">
+                <a class="nav-link" href="<%= employees_path %>">EMPLEADOS</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" id="reports_li">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 INFORMES
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Attendance by day</a>
-                <a class="dropdown-item" href="#">Average time employees checked in/out by month</a>
-                <a class="dropdown-item" href="#">Absence report by month</a>
+                    <a class="dropdown-item" href="#">Attendance by day</a>
+                    <a class="dropdown-item" href="#">Average time employees checked in/out by month</a>
+                    <a class="dropdown-item" href="#">Absence report by month</a>
                 </div>
             </li>
         </ul>
@@ -27,12 +30,34 @@
         <ul class="navbar-nav mr-md-1">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <%= current_admin&.name %>
+                    <%= current_admin&.name %>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <%= link_to "Log out", destroy_admin_session_path, method: :delete %>
+                    <a class="dropdown-item" href="<%= edit_admin_registration_path %>">Editar Perfil</a>
+                    <%= button_to "Salir", destroy_admin_session_path, method: :delete, class: "dropdown-item"%>
                 </div>
             </li>
         </ul>
     </div>
 </nav>
+
+<div style="display: none">
+    <input type="hidden" readonly="true" value="<%= controller.controller_name %>" id="controller_name">
+</div>
+
+<script>
+    controller_page = (document.getElementById("controller_name").value).toString();
+    switch (controller_page) {
+        case 'attendaces':
+            document.getElementById("attendaces_li").classList.add('active');
+            break;
+        case 'companies':
+            document.getElementById("companies_li").classList.add('active');
+            break;
+        case 'employees':
+            document.getElementById("employess_li").classList.add('active');
+            break;
+        default:
+            break;
+    }
+</script>
