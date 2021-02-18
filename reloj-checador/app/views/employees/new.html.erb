@@ -1,5 +1,14 @@
-<h1>New Employee</h1>
 
-<%= render 'form', employee: @employee %>
+<div class="container">
+  <div class="card p-5">
+    <h1 class="card-title text-center">New Employee</h1>
+    <div class="card-body p-5">
+      <%= render 'form', employee: @employee %>
+      <%= link_to employees_path, :class => "btn btn-info" do%>
+        <i class="fas fa-arrow-left"></i> Back
+      <% end %>
+    </div>
+  </div>
+</div>
 
-<%= link_to 'Back', employees_path %>
+
