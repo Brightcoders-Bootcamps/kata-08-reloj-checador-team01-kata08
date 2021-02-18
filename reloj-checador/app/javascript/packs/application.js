@@ -3,8 +3,9 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 import "bootstrap";
+import "@fortawesome/fontawesome-free/css/all";
 import "channels";
-import "../stylesheets/application"
+import "../stylesheets/application";
 
 import * as ActiveStorage from "@rails/activestorage";
 
