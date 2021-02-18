@@ -7,7 +7,5 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 ActiveRecord::Base.transaction do
-  if Rails.env.development?
     load "db/seeds/admins/admins.rb"
-  end
 end
