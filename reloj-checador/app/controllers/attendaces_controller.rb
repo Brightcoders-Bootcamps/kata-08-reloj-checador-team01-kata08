@@ -4,7 +4,10 @@ class AttendacesController < CheckinsController
 
   # GET /attendaces or /attendaces.json
   def index
-    @attendaces = Attendace.all
+    @attendaces = Employee.select("A.id, employees.name, employees.lastname, employees.position, A.date, A.time, A.check_type").
+    joins("JOIN attendaces A ON employees.private_number = A.private_number")
+
+    @attendaces_total = @attendaces.length
   end
 
   # GET /attendaces/1 or /attendaces/1.json
