@@ -1,53 +1,56 @@
 <%= form_with(model: employee) do |form| %>
-  <% if employee.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
 
-      <ul>
-        <% employee.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email %>
+  <div class="form-group">
+    <%= form.label :email, :class => "form-label" %>
+    <%= form.text_field :email, :class => "form-control " + (employee.errors.include?(:email) ? "is-invalid" : "")%>
+    <% if employee.errors.include?(:email) %>
+      <small class="message-error"><%= employee.errors[:email].join(" ")%></small>
+    <%end%>
   </div>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <%= form.label :name, :class => "form-label"%>
+    <%= form.text_field :name, :class => "form-control " + (employee.errors.include?(:name) ? "is-invalid" : "") %>
+    <% if employee.errors.include?(:name) %>
+      <small class="message-error"><%= employee.errors[:name].join(" ")%></small>
+    <%end%>
   </div>
 
-  <div class="field">
-    <%= form.label :lastname %>
-    <%= form.text_field :lastname %>
+  <div class="form-group">
+    <%= form.label :lastname, :class => "form-label"%>
+    <%= form.text_field :lastname, :class => "form-control " + (employee.errors.include?(:lastname) ? "is-invalid" : "") %>
+    <% if employee.errors.include?(:lastname) %>
+      <small class="message-error"><%= employee.errors[:lastname].join(" ")%></small>
+    <%end%>
   </div>
 
-  <div class="field">
-    <%= form.label :position %>
-    <%= form.text_field :position %>
+  <div class="form-group">
+    <%= form.label :position, :class => "form-label" %>
+    <%= form.text_field :position, :class => "form-control " + (employee.errors.include?(:position) ? "is-invalid" : "") %>
+    <% if employee.errors.include?(:position) %>
+      <small class="message-error"><%= employee.errors[:position].join(" ")%></small>
+    <%end%>
   </div>
 
-  <div class="field">
-    <%= form.label :private_number %>
-    <%= form.text_field :private_number %>
+  <div class="form-group">
+    <%= form.label :private_number, :class => "form-label" %>
+    <%= form.number_field :private_number, :class => "form-control " + (employee.errors.include?(:private_number) ? "is-invalid" : "") %>
+    <% if employee.errors.include?(:private_number) %>
+      <small class="message-error"><%= employee.errors[:private_number].join(" ")%></small>
+    <%end%>
   </div>
 
-  <div class="field">
-    <%= form.label :active %>
-    <%= form.check_box :active %>
+  <div class="form-group">
+    <%= form.label :company, :class => "inputState"%>
+    <%= select("employee", "company_id", Company.all.collect {|c| [c.name, c.id]}, {include_blank: "Select a company"},{:class => "form-control"}) %>
   </div>
 
-  <div class="field">
-    <%= form.label :company %>
-    <%#= form.text_field :company_id %>
-    <%= select("employee", "company_id", Company.all.collect {|c| [c.name, c.id]}, {include_blank: "Select a company"}) %>
+  <div class="form-check">
+    <%= form.check_box :active, :class => "form-check-input" %>
+    <%= form.label "employee is active", :class => "form-check-label"%>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="d-flex justify-content-center mt-3 ">
+    <%= form.submit :class => "btn btn-primary btn-lg"%>
   </div>
 <% end %>
