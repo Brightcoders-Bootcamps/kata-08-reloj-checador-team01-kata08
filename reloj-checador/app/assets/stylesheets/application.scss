@@ -15,28 +15,32 @@
  */
 @import "bootstrap/scss/bootstrap";
 
-body{
-    height: 100vh;
-}
+$fa-font-path: "@fortawesome/fontawesome-free/webfonts";
+@import "@fortawesome/fontawesome-free/scss/fontawesome";
+@import "@fortawesome/fontawesome-free/scss/solid";
+@import "@fortawesome/fontawesome-free/scss/regular";
+@import "@fortawesome/fontawesome-free/scss/brands";
+@import "@fortawesome/fontawesome-free/scss/v4-shims";
 
-.btn{
-    i{
-        margin-right: .5rem;
+.btn {
+    i {
+        margin-right: 0.5rem;
     }
 }
 
-.button-td{
+.button-td {
     display: flex;
     flex-wrap: nowrap;
 
-    a, button{
+    a,
+    button {
         margin-left: 1rem;
     }
-    > :first-child{
+    > :first-child {
         margin-left: 0rem;
     }
 }
 
-.message-error{
+.message-error {
     color: red;
 }

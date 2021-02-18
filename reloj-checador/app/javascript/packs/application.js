@@ -11,9 +11,10 @@ import * as ActiveStorage from "@rails/activestorage";
 
 import Rails from "@rails/ujs";
 import Turbolinks from "turbolinks";
+import toastr from 'toastr';
 
 Rails.start();
 Turbolinks.start();
 ActiveStorage.start();
 
-global.toastr = require("toastr");
+global.toastr = toastr;

@@ -5,7 +5,8 @@ Rails.application.routes.draw do
                                         confirmations: "admins/confirmations" }
   resources :companies
 
-  root "attendaces#index"
+  root "welcome#index"
+  get '/welcome', to: 'welcome#index'
   get '/checkin', to: 'checkins#index'
   resources :attendaces, except: [:edit, :delete]
   resources :companies
