@@ -9,4 +9,5 @@
 ActiveRecord::Base.transaction do
     load "db/seeds/admins/admins.rb"
     load "db/seeds/companies/companies.rb"
+    load "db/seeds/employees/employees.rb"
 end
