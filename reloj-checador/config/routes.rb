@@ -4,8 +4,9 @@ Rails.application.routes.draw do
                                         passwords: "admins/passwords",
                                         confirmations: "admins/confirmations" }
   resources :companies
-  
-  root 'attendaces#new'
+
+  root "attendaces#index"
+  get '/checkin', to: 'checkins#index'
   resources :attendaces, except: [:edit, :delete]
   resources :companies
   resources :employees

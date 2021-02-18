@@ -26,12 +26,13 @@
                 </thead>
                 <tbody>
                     <% @abscenes.each do |abscene| %>
+                        <% company = @companies.select{|company| company if company.company_id == abscene.company_id}.first %>
+                        <% abscene_count = company.emp_count - abscene.emp_count %>
                         <tr>
                             <td style="text-align: center;"><%=  abscene.date %></td>
-                            <td style="text-align: center;"><%=  abscene.count %></td>
-                            <td style="text-align: center;"><%=  0 %></td>
-                            <% emp_count = 0 %>
-                            <td style="text-align: center;"><%=  (emp_count > 0) ? emp_count : "0" %></td>
+                            <td style="text-align: center;"><%=  company.name %></td>
+                            <td style="text-align: center;"><%=  abscene.emp_count %></td>
+                            <td style="text-align: center;"><%=  (abscene_count > 0) ? abscene_count : "0" %></td>
                         </tr>
                     <% end %>
                 </tbody>
@@ -47,7 +48,7 @@
 
     <div class="col-12 col-sm-12 col-md-10">
         <div class="form-group">
-            <form action="<%= reports_att_by_day_path(format: :xlsx) %>" method="get">
+            <form action="<%= reports_absence_by_month_path(format: :xlsx) %>" method="get">
                 <button class="btn btn-success btn-sm" type="submit" style="color: #ffffff;">Descargar CSV</button>
             </form>
         </div>

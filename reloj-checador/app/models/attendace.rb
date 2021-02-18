@@ -1,5 +1,8 @@
 class Attendace < ApplicationRecord
+  
   validates :private_number, presence: true
+  
+  before_create :set_attendace_atts
 
   def self.att_by_day(page = nil, per_page = nil)
     return (page == nil && per_page == nil) ?
@@ -41,14 +44,33 @@ class Attendace < ApplicationRecord
   end
 
   def self.absence_by_month(page = nil, per_page = nil, date = nil)
-    p "page #{page} per_page #{per_page}"
-    attendaces = Attendace.select("COUNT(DISTINCT attendaces.private_number) AS PER_DATE_COUNT, attendaces.date, COM.name, COM.id AS com_id")
-                          .joins("LEFT JOIN employees E ON attendaces.private_number = E.private_number")
-                          .joins("LEFT JOIN companies COM ON E.company_id = COM.id")
-                          .where("#{(!date.nil?) ? "attendaces.date = '#{date}'" : ""}")
-                          .group("attendaces.date, E.company_id, COM.id, COM.name, E.id, attendaces.private_number")
-                          .paginate(page: page, per_page: per_page)
+    abscenes = Attendace.select("COUNT(DISTINCT E.private_number) AS emp_count, date, E.company_id")
+                         .joins("LEFT JOIN employees E ON attendaces.private_number = E.private_number")
+                         .where("check_type = 'IN' #{(!date.nil?) ? "AND attendaces.date = '#{date}'" : ""}")
+                         .group("E.company_id, date")
+    abscenes = (page == nil && per_page == nil) ? abscenes :  abscenes.paginate(page: page, per_page: per_page)
+    companies = Employee.select("COUNT(DISTINCT employees.id) AS emp_count, employees.company_id, COM.name")
+                         .joins("RIGHT JOIN companies COM ON employees.company_id = COM.id")
+                         .where(company_id: abscenes.map { |att| att.company_id }.uniq)
+                         .group("employees.company_id, COM.id")
+    return [abscenes, companies]
+  end
 
-    return attendaces
+  private
+
+  def set_attendace_atts
+    set_time_check
+    set_check_type
+  end
+
+  def set_time_check
+    tim = Time.new
+    self.date = tim.strftime("%Y-%m-%d")
+    self.time = tim.strftime("%I:%M:%S")
+  end
+
+  def set_check_type
+    attendaces_count = Attendace.where(private_number: self.private_number).count
+    self.check_type = (attendaces_count < 1) ? "IN" : (attendaces_count % 2 == 0) ? "IN" : "OUT"
   end
 end
