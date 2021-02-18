@@ -51,21 +51,15 @@ class EmployeesController < ApplicationController
 
   # DELETE /employees/1 or /employees/1.json
   def destroy
-    # @employee.destroy
     @employee.active = false
-    if @employee.update
-      respond_to do |format|
-        format.html { redirect_to employees_url, notice: "Employee was successfully inactivated." }
-        format.json { head :no_content }
-      end
+    if @employee.save
+     flash[:success] = "Employee was successfully inactivated."
+     redirect_to employees_url
     else
-      respond_to do |format|
-        format.html { redirect_to employees_url, notice: "An error has been ocurred." }
-        format.json { head :no_content }
-      end
-    end
-    
-  end
+     flash[:error] = @employee.errors.full_messages
+     redirect_to employees_url
+    end  
+   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
