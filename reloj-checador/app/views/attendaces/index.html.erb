@@ -1,29 +1,26 @@
 <p id="notice"><%= notice %></p>
-
-<h1>Attendaces</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Private number</th>
-      <th>Date</th>
-      <th>Time</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @attendaces.each do |attendace| %>
+<div class="container">
+  <h1 class="title">Attendaces</h1>
+  <div class="content">
+  <div> 
+    <p>Total Attendances <strong><%= @attendaces_total%></strong></p>
+  </div>
+  <table class="table table-striped mt-4">
+    <thead>
       <tr>
-        <td><%= attendace.private_number %></td>
-        <td><%= attendace.date %></td>
-        <td><%= attendace.time %></td>
-        <td><%= link_to 'Show', attendace %></td>
+        <th scope="col">ID attendace</th>
+        <th scope="col">Name</th>
+        <th scope="col">lastname</th>
+        <th scope="col">Ocupation</th>
+        <th scope="col"> Date</th>
+        <th scope="col">Hour</th>
+        <th scope="col">Check_type</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
-
-<%= link_to 'New Attendace', new_attendace_path %>
+    <tbody>
+      <%= render "body_table_attendaces", attendaces: @attendaces %>
+    </tbody>
+  </table>
+  </div>
+</div>

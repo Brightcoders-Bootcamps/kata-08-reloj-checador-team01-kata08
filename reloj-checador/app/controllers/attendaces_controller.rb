@@ -1,9 +1,13 @@
 class AttendacesController < CheckinsController
   before_action :set_attendace, only: %i[ show edit update destroy ]
   before_action :redirect_to_new, except: [:new, :create]
+
   # GET /attendaces or /attendaces.json
   def index
-    @attendaces = Attendace.all
+    @attendaces = Employee.select("A.id, employees.name, employees.lastname, employees.position, A.date, A.time, A.check_type").
+    joins("JOIN attendaces A ON employees.private_number = A.private_number")
+
+    @attendaces_total = @attendaces.length
   end
 
   # GET /attendaces/1 or /attendaces/1.json
@@ -41,22 +45,20 @@ class AttendacesController < CheckinsController
   def update
     if @attendace.update(attendace_params)
       flash[:success] = "Attendace was successfully updated."
-      redirect_to @attendaces_path
     else
       flash[:error] = @attendace.errors.full_messages
-      render @attendaces_path
     end
+    redirect_to @attendaces_path
   end
 
   # DELETE /attendaces/1 or /attendaces/1.json
   def destroy
     if @attendace.destroy
       flash[:success] = "Record deleted"
-      render "index"
     else
       flash[:error] = @attendace.errors.full_messages
-      render "index"
     end
+    render "index"
   end
 
   private

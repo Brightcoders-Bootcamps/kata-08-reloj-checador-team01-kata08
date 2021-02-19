@@ -1,5 +1,7 @@
-<h1>New Attendace</h1>
 
-<%= render 'form', attendace: @attendace %>
-
-<%= link_to 'Back', new_attendace_path %>
+<div class="container h-75 d-flex justify-content-center">
+  <div class="card p-5 align-self-center w-100">
+    <%= link_to 'Login', admin_session_path, :class => "btn btn-info btn-lg align-self-end px-4" %>
+    <%= render 'form', attendace: @attendace %>
+  </div>
+</div>
