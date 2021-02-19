@@ -51,7 +51,7 @@ class Attendace < ApplicationRecord
 
     return attendaces
   end
-end
+
   before_create :set_attendace_atts
 
   private
