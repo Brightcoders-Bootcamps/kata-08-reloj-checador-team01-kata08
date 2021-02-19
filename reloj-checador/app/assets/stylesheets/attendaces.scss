@@ -1,3 +1,37 @@
-// Place all the styles related to the Attendaces controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+.wrapper{
+    width: 60%;
+    margin: auto;
+
+
+    form{
+        margin-top: 2rem;
+        label{
+            font-size: 1.3rem;
+        }
+        input{
+            font-size: 1.3rem;
+        }
+    }
+}
+
+.card-time{
+    border-radius: 2rem;
+    .clock-time{
+        margin: 0rem;
+        font-size: 8rem;
+    }
+    
+    @media screen and (max-width: 1200px) {
+        .clock-time{
+            font-size: 4rem;
+        }
+	}
+}
+
+.input-attendance{
+    .form-control{
+        border-top: none;
+        border-right: none;
+        border-left: none;
+    }
+}
