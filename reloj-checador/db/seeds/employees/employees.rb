@@ -10,14 +10,14 @@ def get_private_number(count)
 end
 
 Company.all.each { |company|
-  (0..(rand 15..50)).each { |emp|
+  (0..(rand 5..10)).each { |emp|
     global_emp_count += 1
     name = Faker::Name.unique.name
     employee = Employee.find_or_initialize_by(email: Faker::Internet.email)
                        .update(
                          email: Faker::Internet.email(name: name, separators: "_"),
                          name: name.split(" ")[0],
-                         lastname: name.split(" ")[0],
+                         lastname: name.split(" ")[1],
                          position: Faker::Job.title,
                          private_number: get_private_number(Employee.count),
                          active: [true, false].sample,
