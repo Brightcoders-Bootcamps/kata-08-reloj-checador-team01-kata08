@@ -7,7 +7,6 @@ import "popper.js"
 import "bootstrap";
 import "@fortawesome/fontawesome-free/css/all";
 import "channels";
-import "../stylesheets/application.scss";
 
 import * as ActiveStorage from "@rails/activestorage";
 
@@ -18,6 +17,10 @@ import Turbolinks from "turbolinks";
 import { faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import toastr from 'toastr';
+// import "../stylesheets/application.scss";
+
+
+
 
 Rails.start();
 Turbolinks.start();
