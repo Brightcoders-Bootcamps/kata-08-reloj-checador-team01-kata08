@@ -7,7 +7,7 @@ class ReportsController < ApplicationController
         response.headers["Content-Disposition"] = "attachment; filename=\"#{filename}\""
       }
       format.html {
-        @attendaces = Attendace.att_by_day(params[:page], 1)
+        @attendaces = Attendace.att_by_day(params[:page], 10)
       }
     end
   end
@@ -58,7 +58,7 @@ class ReportsController < ApplicationController
                          .select("attendaces.private_number, date, E.company_id, COUNT( CASE WHEN check_type = 'IN' THEN 1 END)")
                          .group("attendaces.private_number, date, E.company_id")
                          .joins("JOIN employees E ON E.private_number = attendaces.private_number")
-                         .paginate(page: params[:page], per_page: 1)
+                         .paginate(page: params[:page], per_page: 10)
     p "@abscenes.to_json #{@abscenes.to_json}"
   end
 end

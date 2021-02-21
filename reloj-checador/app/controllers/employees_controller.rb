@@ -3,14 +3,17 @@ class EmployeesController < ApplicationController
 
   # GET /employees or /employees.json
   def index
-    @employees = Employee.all
+    @employees = Employee.all.order(created_at: :desc).group("employees.company_id, id").paginate(page: params[:page], per_page: 15)
+    @companies = Company.where(id: @employees.pluck(:company_id).uniq.sort)
   end
 
   # GET /employees/1 or /employees/1.json
   def show
-    @list_attendaces = Employee.select("A.id, A.date, A.time, A.check_type").
-    joins("JOIN attendaces A ON employees.private_number = A.private_number").
-    where(private_number: @employee.private_number)
+    @list_attendaces = Employee.select("A.id, A.date, A.time, A.check_type")
+                               .joins("JOIN attendaces A ON employees.private_number = A.private_number")
+                               .where(private_number: @employee.private_number)
+                               .order("A.date DESC")
+                               .paginate(page: params[:page], per_page: 15)
   end
 
   # GET /employees/new

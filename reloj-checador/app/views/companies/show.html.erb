@@ -15,11 +15,34 @@
       </p>
 
       <p class="list-group-item">
-        <strong>Employees:</strong>
-        <% @company.employees.all.each do |employee| %>
-          <a href="<%= employee_path(employee) %>"><%= employee.name %> <%= employee.lastname %></a> |
-        <% end %>
+        <strong>Employees Number:</strong>
+        <%= @company.employees.count %>
       </p>
+
+      <div class="table table-responsive">
+        <strong>Employees:</strong>
+        <table class="table table-striped col-12 col-sm-4 mt-3">
+          <thead>
+            <tr>
+              <th scope="col">Name Lastname</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @employees.each do |employee| %>
+              <tr>
+                <td> <a href="<%= employee_path(employee) %>"><%= employee.name %> <%= employee.lastname %></a> </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <div class="media mb-0">
+          <div class="media-body">
+            <br>
+            <%= will_paginate @employees %>
+          </div>
+        </div>
+      </div>      
+        
     </div>
   </div>
 
