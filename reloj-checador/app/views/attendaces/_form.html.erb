@@ -14,13 +14,13 @@
     <%= form.submit :class => "btn btn-info btn-block btn-lg"%>
 
   <% end %>
-</div>
 
-<script>
-  var clock = document.getElementById("att-new-clock");
-  if (clock != undefined)
-    setInterval(() => {
-      let date = new Date()
-      clock.innerHTML = date.toLocaleTimeString();
-    },1000);
-</script>
+  <script>
+    var clock = document.getElementById("att-new-clock");
+    if (clock != undefined)
+      setInterval(() => {
+        let date = new Date()
+        clock.innerHTML = date.toLocaleTimeString();
+      },1000);
+  </script>
+</div>
