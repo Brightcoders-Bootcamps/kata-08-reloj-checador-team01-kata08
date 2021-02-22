@@ -6,7 +6,8 @@ import "jquery";
 import "popper.js"
 import "bootstrap";
 import "channels";
-import "@fortawesome/fontawesome-free/css/all.css";
+import "@fortawesome/fontawesome-free/js/all";
+import "./../stylesheets/application";
 
 import * as ActiveStorage from "@rails/activestorage";
 
