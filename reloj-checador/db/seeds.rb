@@ -7,7 +7,11 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 ActiveRecord::Base.transaction do
-  if Rails.env.development?
-    load "db/seeds/admins/admins.rb"
-  end
+  Attendace.destroy_all
+  Employee.destroy_all
+  Company.destroy_all
+  load "db/seeds/admins/admins.rb"
+  load "db/seeds/companies/companies.rb"
+  load "db/seeds/employees/employees.rb"
+  load "db/seeds/attendaces/attendaces.rb"
 end

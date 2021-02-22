@@ -1,0 +1,31 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "ENTRADAS-SALIDAS") do |sheet|
+  header_style = sheet.styles.add_style("bg_color": "006c3b", "fg_color": "FFFFFF", b:true, alignment: { horizontal: :center, vertical: :center })
+  wrap_text    = wb.styles.add_style({ "alignment": { horizontal: :center, vertical: :center, "wrap_text": true }})
+  wrap_text_2  = wb.styles.add_style(:format_code => "@", "alignment": { horizontal: :center, vertical: :center, "wrap_text": true })
+
+  sheet.add_row [
+    'Cantidad de entradas/salidas por día'
+  ], style: header_style
+
+  sheet.add_row [
+    ''
+  ]
+
+  # Create the header row
+  sheet.add_row [
+    'FECHA',
+    'Nro. de entradas/salidas'
+  ], style: header_style
+  
+  # Create entries for each item
+  @attendaces.order(date: :asc).each do |attendace|
+    sheet.add_row [
+      "#{attendace&.date.strftime('%Y-%m-%d')}", #A
+      attendace&.date_count #B
+    ], style: [wrap_text,   #A
+               wrap_text   #B
+              ]
+  end
+end
