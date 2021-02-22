@@ -19,6 +19,7 @@
 <script>
     var renderTime = function () {
         var time = new Date();
+        var clock = document.getElementById("clock");
         clock.textContent = `${time.getDate()}-${time.getMonth()+1}-${time.getFullYear()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`
     };
     renderTime();
