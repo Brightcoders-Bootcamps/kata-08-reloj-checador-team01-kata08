@@ -1,0 +1,40 @@
+<div class="container align-middle">
+    <div class="col-12 col-sm-12 col-md-10">
+        <h1 class="title font-bold pb-3 mt-3">Cantidad de entradas/salidas por día</h1>
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center">Fecha</th>
+                        <th class="text-center">No. de entradas/salidas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @attendaces.each do |attendace| %>
+                        <tr>
+                            <td class="text-center"><%=  attendace.date %></td>
+                            <td class="text-center"><%=  attendace.date_count %></td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+            <div class="media mb-3">
+                <div class="media-body">
+                    <%= will_paginate @attendaces %>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-10">
+        <div class="form-group">
+            <form action="<%= reports_att_by_day_path(format: :xlsx) %>" method="get">
+                <button class="btn btn-success btn-sm" type="submit">Descargar CSV</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="container align-middle">
+    <div class="col-12 col-sm-12 col-md-7">
+        <h1 class="title font-bold pb-3 mt-3">Ausencias por mes</h1>
+    </div>
+
+    <form class="col-12 col-sm-12 col-md-3" action="<%= reports_absence_by_month_path %>" method="get">
+        <div class="row align-content-end ml-0 ml-sm-4">
+            <div class="form-group">
+                <input type="date" class="form-control" name="date" value="<%= params[:date] %>">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-secondary btn-sm ml-0 ml-3">BUSCAR</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="col-12 col-sm-12 col-md-12">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center">Fecha</th>
+                        <th class="text-center">Compañía</th>
+                        <th class="text-center">Entradas Registradas</th>
+                        <th class="text-center">Ausencias</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @abscenes.each do |abscene| %>
+                        <tr>
+                            <td class="text-center"><%=  abscene.date %></td>
+                            <td class="text-center"><%=  abscene.count %></td>
+                            <td class="text-center"><%=  0 %></td>
+                            <% emp_count = 0 %>
+                            <td class="text-center"><%=  (emp_count > 0) ? emp_count : "0" %></td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+            <div class="media mb-4">
+                <div class="media-body">
+                    <%= will_paginate @abscenes %>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-10">
+        <div class="form-group">
+            <form action="<%= reports_att_by_day_path(format: :xlsx) %>" method="get">
+                <button class="btn btn-success btn-sm" type="submit">Descargar CSV</button>
+            </form>
+        </div>
+    </div>
+</div>
