@@ -6,7 +6,7 @@ class AttendacesController < CheckinsController
   def index
     @attendaces = Employee.select("A.id, employees.name, employees.lastname, employees.position, A.date, A.time, A.check_type")
                           .joins("JOIN attendaces A ON employees.private_number = A.private_number")
-                          .order("A.date DESC")
+                          .order("A.id DESC")
                           .paginate(page: params[:page], per_page: 15)
 
     @attendaces_total = @attendaces.length

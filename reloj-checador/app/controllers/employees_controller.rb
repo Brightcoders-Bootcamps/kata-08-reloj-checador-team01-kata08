@@ -12,7 +12,7 @@ class EmployeesController < ApplicationController
     @list_attendaces = Employee.select("A.id, A.date, A.time, A.check_type")
                                .joins("JOIN attendaces A ON employees.private_number = A.private_number")
                                .where(private_number: @employee.private_number)
-                               .order("A.date DESC")
+                               .order("A.id DESC")
                                .paginate(page: params[:page], per_page: 15)
   end
 
@@ -57,11 +57,10 @@ class EmployeesController < ApplicationController
     @employee.active = false
     if @employee.save
      flash[:success] = "Employee was successfully inactivated."
-     redirect_to employees_url
     else
      flash[:error] = @employee.errors.full_messages
-     redirect_to employees_url
-    end  
+    end
+    redirect_to employees_url
    end
 
   private

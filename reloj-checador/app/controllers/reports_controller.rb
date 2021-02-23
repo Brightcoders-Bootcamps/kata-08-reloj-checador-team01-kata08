@@ -27,38 +27,15 @@ class ReportsController < ApplicationController
 
   def absence_by_month
     date = params[:date]
-    # respond_to do |format|
-    #   format.xlsx {
-    #     @abscenes = Attendace.absence_by_month(nil, nil, date)
-    #     @companies  = Employee.select("COUNT(DISTINCT employees.company_id), employees.company_id, COM.name")
-    #                                   .joins("RIGHT JOIN companies COM ON employees.company_id = COM.id")
-    #                                   .where(company_id: @abscenes.map { |att| att.com_id }.uniq)
-    #     filename = "IN-OUT AVG por mes-#{DateTime.now.strftime("%d-%m-%Y %H:%M")}.xlsx"
-    #     response.headers["Content-Disposition"] = "attachment; filename=\"#{filename}\""
-    #   }
-    #   format.html {
-    #     @abscenes = Attendace.absence_by_month(params[:page], 1, date)
-    #     @companies  = Employee.select("COUNT(DISTINCT employees.company_id), employees.company_id, COM.name")
-    #                                   .joins("RIGHT JOIN companies COM ON employees.company_id = COM.id")
-    #                                   .where(company_id: @abscenes.map { |att| att.com_id }.uniq)
-    #                                   .group("employees.company_id, COM.id")
-    #     p "@attendaces #{@abscenes.to_json}"
-    #   }
-
-    # end
-
-    # @abscenes = Attendace.select("COUNT(DISTINCT attendaces.private_number) AS PER_DATE_COUNT, attendaces.date, COM.name, COM.id AS com_id")
-    #   .joins("LEFT JOIN employees E ON attendaces.private_number = E.private_number")
-    #   .joins("LEFT JOIN companies COM ON E.company_id = COM.id")
-    #   .where("#{(!date.nil?) ? "attendaces.date = '#{date}'" : ""}")
-    #   .group("attendaces.date, E.company_id, COM.id, COM.name, E.id, attendaces.private_number")
-    #   .paginate(page: params[:page], per_page: 1)
-    
-    @abscenes = Attendace.where("#{(!date.nil?) ? "attendaces.date = '#{date}'" : ""}")
-                         .select("attendaces.private_number, date, E.company_id, COUNT( CASE WHEN check_type = 'IN' THEN 1 END)")
-                         .group("attendaces.private_number, date, E.company_id")
-                         .joins("JOIN employees E ON E.private_number = attendaces.private_number")
-                         .paginate(page: params[:page], per_page: 10)
-    p "@abscenes.to_json #{@abscenes.to_json}"
+    respond_to do |format|
+      format.xlsx {
+        @abscenes, @companies = Attendace.absence_by_month(nil, nil, date)
+        filename = "AUSENCIAS or mes-#{DateTime.now.strftime("%d-%m-%Y %H:%M")}.xlsx"
+        response.headers["Content-Disposition"] = "attachment; filename=\"#{filename}\""
+      }
+      format.html {
+        @abscenes, @companies = Attendace.absence_by_month(params[:page], 10, date)
+      }
+    end
   end
 end
