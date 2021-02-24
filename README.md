@@ -1,3 +1,12 @@
+## src
+
+![RubyCritic](badges/app/rubycritic_badge_score.svg)
+
+## spec
+
+![RubyCritic](badges/spec/rubycritic_badge_score.svg)
+
+
 ![BrightCoders Logo](img/logo-bc.png)
 
 # Reloj Checador App

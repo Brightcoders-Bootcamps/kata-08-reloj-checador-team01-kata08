@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ruby Critic - Home</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- StyleSheets -->
+    <link href="../../../assets/vendor/stylesheets/bootstrap.min.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+    <link href="../../../assets/vendor/stylesheets/font-awesome.min.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+    <link href="../../../assets/vendor/stylesheets/prettify.custom_theme.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+    <link href="../../../assets/stylesheets/application.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+  </head>
+
+  <body>
+    <header class="navbar navbar-default navbar-fixed-top">
+      <a href="#menu-toggle" class="btn btn-default hidden-lg visible-sm-* hidden-md visible-xs-* pull-left" id="menu-toggle"><i class="fa fa-bars" aria-hidden="true"></i></a>
+      <a href="../../../overview.html"><img src="../../../assets/images/logo.png" alt="Ruby Critic Logo" title="Ruby Critic Logo" width="55"><span class="logo">RUBYCRITIC</span></a>
+      
+    </header>
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <aside id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+          <li class="sidebar-item">
+            <a href="../../../overview.html" class="project-nav-item overview-nav"><i class="fa fa-dashboard"></i>Overview</a>
+          </li>
+          <li class="sidebar-item">
+            <a href="../../../code_index.html" class="project-nav-item code-index-nav"><i class="fa fa-code"></i>Code</a>
+          </li>
+          <li class="sidebar-item">
+            <a href="../../../smells_index.html" class="project-nav-item smells-index-nav"><i class="fa fa-warning"></i>Smells</a>
+          </li>
+          <li class="sidebar-item">
+            <a href="../../../simple_cov_index.html" class="project-nav-item coverage-index-nav"><i class="fa fa-umbrella"></i>Coverage</a>
+          </li>
+        </ul>
+      </aside>
+      <!-- /#sidebar-wrapper -->
+      <div id="page-content-wrapper">
+        <div class="container-fluid">
+          <div class="row">
+  <!--Page Title -->
+  <div class="Page_Title">
+    <div class="file-time">
+      <span class="committed-at">
+        
+          Updated <time class='js-timeago' datetime='2021-02-18 20:24:22 -0600'>2021-02-18 20:24:22 -0600</time>
+        
+      </span>
+    </div>
+    <div>
+      <h3><small>reloj-checador/app/models /</small> attendace.rb</h3>
+    </div>
+  </div>
+  <!--End Page Title -->
+  <div class="Content_Wrapper">
+    <!-- code detail -->
+    <div class="code-top-detail clearfix row">
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-1">
+            <div class="rating a big">
+              A
+            </div>
+          </div>
+          <div class="code-statistics col-md-11">
+            <div class="col-md-3">
+              <div><span class="metric">74</span><small> lines of codes</small></div>
+              <div><span class="metric">6</span><small> methods</small></div>
+            </div>
+            <div class="col-md-3">
+              <div><span class="metric">7.2</span><small> complexity/method</small></div>
+              <div><span class="metric">7</span><small> churn</small></div>
+            </div>
+            <div class="col-md-3">
+              <div><span class="metric">43.17</span><small> complexity</small></div>
+              <div><span class="metric">0</span><small> duplications</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="code-tabs">
+          <ul class="nav nav-pills right-to-left">
+            <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
+            <li class="active">
+              <a href="#" id="toggle-smells" class="toggle-button button">
+                4
+                smells
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <code class="prettyprint linenums lang-ruby file-code js-file-code">class Attendace &lt; ApplicationRecord<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Attendace has no descriptive comment</span>          </div>  </li></ol>
+  validates :private_number, presence: true
+
+  def self.att_by_day(page = nil, per_page = nil)
+    return (page == nil &amp;&amp; per_page == nil) ?<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nil-Check.md" target="_blank"><b>NilCheck</b></a>        </span>      </div>      <span>Attendace#self.att_by_day performs a nil-check</span>          </div>  </li></ol>
+             Attendace.select(&quot;count(date) AS date_count, date&quot;).group(&quot;date&quot;) :
+             Attendace.select(&quot;count(date) AS date_count, date&quot;).group(&quot;date&quot;).paginate(page: page, per_page: per_page)
+  end
+
+  def self.avg_time_by_employees(page = nil, per_page = nil)
+    sql = &quot;SELECT 
+            AVG_TIME_IN.mm,
+            AVG_TIME_IN.yyyy,
+            TO_CHAR(AVG_TIME_IN.TIME_IN,&#39;HH12:MI:SS&#39;) AS TIME_IN,
+            TO_CHAR(AVG_TIME_OUT.TIME_OUT,&#39;HH12:MI:SS&#39;) AS TIME_OUT
+          FROM
+          (
+            SELECT
+            TO_CHAR(ATT.date, &#39;Mon&#39;) AS mm,
+            EXTRACT(year FROM ATT.date) AS yyyy,
+            AVG(ATT.time) AS TIME_IN
+            FROM attendaces ATT
+            WHERE ATT.check_type = &#39;IN&#39;
+            GROUP BY 1, 2
+          )AVG_TIME_IN
+          LEFT JOIN
+            (
+              SELECT TO_CHAR(date, &#39;Mon&#39;) AS mm,
+              EXTRACT(year FROM ATT.date) AS yyyy,
+              AVG(ATT.time) AS TIME_OUT
+              FROM attendaces ATT
+              WHERE ATT.check_type = &#39;OUT&#39;
+              GROUP BY 1, 2
+            )AVG_TIME_OUT
+          ON AVG_TIME_IN.mm = AVG_TIME_OUT.mm
+          GROUP BY
+          AVG_TIME_IN.mm,  AVG_TIME_OUT.mm, AVG_TIME_IN.yyyy,  AVG_TIME_OUT.yyyy,
+          AVG_TIME_IN.TIME_IN, AVG_TIME_OUT.TIME_OUT
+          &quot;
+    return (page == nil &amp;&amp; per_page == nil) ? Attendace.find_by_sql(sql) : Attendace.paginate_by_sql(sql, page: page, per_page: per_page)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nil-Check.md" target="_blank"><b>NilCheck</b></a>        </span>      </div>      <span>Attendace#self.avg_time_by_employees performs a nil-check</span>          </div>  </li></ol>
+  end
+
+  def self.absence_by_month(page = nil, per_page = nil, date = nil)
+    p &quot;page #{page} per_page #{per_page}&quot;
+    attendaces = Attendace.select(&quot;COUNT(DISTINCT attendaces.private_number) AS PER_DATE_COUNT, attendaces.date, COM.name, COM.id AS com_id&quot;)
+                          .joins(&quot;LEFT JOIN employees E ON attendaces.private_number = E.private_number&quot;)
+                          .joins(&quot;LEFT JOIN companies COM ON E.company_id = COM.id&quot;)
+                          .where(&quot;#{(!date.nil?) ? &quot;attendaces.date = &#39;#{date}&#39;&quot; : &quot;&quot;}&quot;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nil-Check.md" target="_blank"><b>NilCheck</b></a>        </span>      </div>      <span>Attendace#self.absence_by_month performs a nil-check</span>          </div>  </li></ol>
+                          .group(&quot;attendaces.date, E.company_id, COM.id, COM.name, E.id, attendaces.private_number&quot;)
+                          .paginate(page: page, per_page: per_page)
+
+    return attendaces
+  end
+
+  before_create :set_attendace_atts
+
+  private
+
+  def set_attendace_atts
+    set_time_check
+    set_check_type
+  end
+
+  def set_time_check
+    tim = Time.new
+    self.date = tim.strftime(&quot;%Y-%m-%d&quot;)
+    self.time = tim.strftime(&quot;%I:%M:%S&quot;)
+  end
+
+  def set_check_type
+    attendaces_count = Attendace.where(private_number: self.private_number).count
+    self.check_type = (attendaces_count &lt; 1) ? &quot;IN&quot; : (attendaces_count % 2 == 0) ? &quot;IN&quot; : &quot;OUT&quot;
+  end
+end
+</code>
+  </div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScripts -->
+    <script src="../../../assets/vendor/javascripts/jquery.min.js"></script>
+    <script src="../../../assets/vendor/javascripts/jquery.tablesorter.min.js"></script>
+    <script src="../../../assets/vendor/javascripts/jquery.scrollTo.min.js"></script>
+    <script src="../../../assets/vendor/javascripts/jquery.timeago.js"></script>
+    <script src="../../../assets/vendor/javascripts/highcharts.src-4.0.1.js"></script>
+    <script src="../../../assets/vendor/javascripts/prettify.js"></script>
+    <script src="../../../assets/vendor/javascripts/bootstrap.min.js"></script>
+    <script src="../../../assets/javascripts/application.js"></script>
+    <script src="../../../assets/vendor/javascripts/jquery.filtertable.min.js"></script>
+  </body>
+</html>
