@@ -7,6 +7,10 @@
 ![RubyCritic](badges/spec/rubycritic_badge_score.svg)
 
 
+## Demo de la página
+
+[Reloj Checador](https://reloj-checador-team01-kata08.herokuapp.com/)
+
 ![BrightCoders Logo](img/logo-bc.png)
 
 # Reloj Checador App
