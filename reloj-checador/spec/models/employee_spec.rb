@@ -1,12 +1,19 @@
 require '../rails_helper'
 
 RSpec.describe Employee, type: :model do
+  company = Company.create(:name => "Company Name", :address => "Company Address")
+
   subject {
-    described_class.new(email: "mail@example.com",
+    described_class.new(id: 3,
+                        email: "mail@example.com",
                         name: "Random name",
                         lastname: "Random lastname",
                         position: "Random position",
-                        private_number: "12345")
+                        private_number: "12345",
+                        active: true,
+                        company_id: company.id,
+                        created_at: Time.now(),
+                        updated_at: Time.now())
   }
 
   it "is valid with all attributes" do
