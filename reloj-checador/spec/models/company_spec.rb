@@ -1,15 +1,24 @@
 require '../rails_helper'
 
 RSpec.describe Company, type: :model do
+
+  subject {
+    described_class.new(name: "Anything",
+                        address: "Lorem ipsum")
+  }
+
+  it "is valid with valid attributes" do
+    expect(subject).to be_valid
+  end
+
   it "is not valid without name attribute" do
-    expect(Company.new(:name => nil)).to_not be_valid
+    subject.name = nil
+    expect(subject).to_not be_valid
   end
+
   it "is not valid without address attribute" do
-    expect(Company.new(:address => nil)).to_not be_valid
-  end
-  describe "submit" do
-    @comp = Company.new(:name => "mycompani", :address=>"myaddresstest 5")
-    @comp.submit
+    subject.address = nil
+    expect(subject).to_not be_valid
   end
   
 end
