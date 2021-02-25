@@ -20,55 +20,55 @@ class CompaniesController < ApplicationController
   # POST /companies or /companies.json
   def create
     @company = Company.new(company_params)
-
-    respond_to do |format|
-      if @company.save
-        format.html { redirect_to @company, notice: "Company was successfully created." }
-        format.json { render :show, status: :created, location: @company }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @company.errors, status: :unprocessable_entity }
-      end
+    if @company.save
+      flash[:success] = "Company was successfully created."
+      redirect_to companies_url
+    else
+      flash[:error] = @company.errors.full_messages.join(" and ")
+      redirect_to new_company_url(@company)
     end
   end
 
   # PATCH/PUT /companies/1 or /companies/1.json
   def update
-    respond_to do |format|
-      if @company.update(company_params)
-        format.html { redirect_to @company, notice: "Company was successfully updated." }
-        format.json { render :show, status: :ok, location: @company }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @company.errors, status: :unprocessable_entity }
-      end
+    if @company.update(company_params)
+      flash[:success] = "Company was successfully updated."
+      redirect_to company_url(@company)
+    else
+      flash[:error] = @company.errors.full_messages.join(" and ")
+      render "edit"
     end
   end
 
   # DELETE /companies/1 or /companies/1.json
   def destroy
     if @company.employees.count == 0
-      @company.destroy
-      respond_to do |format|
-        format.html { redirect_to companies_url, notice: "Company was successfully destroyed." }
-        format.json { head :no_content }
+      if @company.destroy
+        flash[:success] = "Company was successfully destroyed."
+      else
+        flash[:error] = @company.errors.full_messages.join(" and ")
       end
     else
-      respond_to do |format|
-        format.html { redirect_to companies_url, notice: "Company wasn't destroyed." }
-        format.json { head :no_content }
-      end
+      flash[:error] = "Company has existing employees asociated"
     end
+    redirect_to companies_url
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_company
-      @company = Company.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def company_params
-      params.require(:company).permit(:name, :address)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_company
+    @company = Company.find(params[:id]) rescue nil
+    companies_redirection if @company.nil?
+  end
+
+  # Only allow a list of trusted parameters through.
+  def company_params
+    params.require(:company).permit(:name, :address)
+  end
+
+  def companies_redirection
+    flash[:error] = 'Company is not exist'
+    redirect_to companies_url
+  end
 end

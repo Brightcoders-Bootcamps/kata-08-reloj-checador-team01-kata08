@@ -27,9 +27,7 @@ RSpec.describe "/companies", type: :request do
 
   let(:valid_attributes_for_cration) { { name: "Company Test 2", address: "Address Company Test 2" } }
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:invalid_attributes) { { name: nil, address: nil } }
 
   before(:each) do
     @current_user = :admin
@@ -47,6 +45,11 @@ RSpec.describe "/companies", type: :request do
     it "renders a successful response" do
       company = valid_attributes
       get company_url(company)
+      expect(response).to be_successful
+    end
+
+    it "redirect to companies_url if company`s id is invalid" do
+      get companies_url( Company.count + rand(1..100) )
       expect(response).to be_successful
     end
   end
@@ -76,22 +79,22 @@ RSpec.describe "/companies", type: :request do
 
       it "redirects to the created company" do
         post companies_url, params: { company: valid_attributes_for_cration }
-        expect(response).to redirect_to(company_url(Company.last))
+        expect(response).to redirect_to(companies_url)
       end
     end
 
-    # context "with invalid parameters" do
-    #   it "does not create a new Company" do
-    #     expect {
-    #       post companies_url, params: { company: invalid_attributes }
-    #     }.to change(Company, :count).by(0)
-    #   end
+    context "with invalid parameters" do
+      it "does not create a new Company" do
+        expect {
+          post companies_url, params: { company: invalid_attributes }
+        }.to change(Company, :count).by(0)
+      end
 
-    #   it "renders a successful response (i.e. to display the 'new' template)" do
-    #     post companies_url, params: { company: invalid_attributes }
-    #     expect(response).to be_successful
-    #   end
-    # end
+      it "renders a successful response (i.e. to display the 'new' template)" do
+        post companies_url, params: { company: invalid_attributes }
+        expect(response).to redirect_to(new_company_url)
+      end
+    end
   end
 
   describe "PATCH /update" do
@@ -105,7 +108,7 @@ RSpec.describe "/companies", type: :request do
         patch company_url(company), params: { company: new_attributes }
         company.reload
         # skip("Add assertions for updated state")
-        expect(company.attributes).to include( { "name" => "Company Name updated" } )
+        expect(company.attributes).to include({ "name" => "Company Name updated" })
       end
 
       it "redirects to the company" do
@@ -116,13 +119,13 @@ RSpec.describe "/companies", type: :request do
       end
     end
 
-    # context "with invalid parameters" do
-    #   it "renders a successful response (i.e. to display the 'edit' template)" do
-    #     company = Company.create! valid_attributes
-    #     patch company_url(company), params: { company: invalid_attributes }
-    #     expect(response).to be_successful
-    #   end
-    # end
+    context "with invalid parameters" do
+      it "renders a successful response (i.e. to display the 'edit' template)" do
+        company = valid_attributes
+        patch company_url(company), params: { company: invalid_attributes }
+        expect(response).to be_successful
+      end
+    end
   end
 
   describe "DELETE /destroy" do

@@ -5,7 +5,7 @@ module ApplicationHelper
       unless ignore_types.include?(type)
         type = "success" if type == "notice"
         type = "error" if type == "alert"
-        text = "<script>toastr.#{type}('#{message}', '', { closeButton: true, progressBar: true })</script>"
+        text = "<script>toastr.#{type}(`#{message}`, '', { closeButton: true, progressBar: true })</script>"
         flash_messages << text.html_safe if message
       end
     end.join("\n").html_safe
