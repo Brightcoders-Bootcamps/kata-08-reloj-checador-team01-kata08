@@ -3,18 +3,16 @@
         <div class="col-12 col-sm-12 col-md-7">
             <h4 class="justify-content-center  align-items-center">Cantidad de entradas/salidas por día</h4>
         </div>
-        <div class="col-12 col-sm-12 col-md-3">
-        </div>
-        <!--form class="col-12 col-sm-12 col-md-3">
+        <form class="col-12 col-sm-12 col-md-3" action="<%= reports_att_by_day_path %>" method="get">
             <div class="row align-content-end ml-0 ml-sm-4">
                 <div class="form-group">
-                    <input type="date" class="form-control">
+                    <input type="date" class="form-control" name="date" value="<%= params[:date] %>">
                 </div>
                 <div class="form-group">
                     <button class="btn btn-secondary btn-sm ml-0 ml-3">BUSCAR</button>
                 </div>
             </div>
-        </form-->
+        </form>
         <div class="col-12 col-sm-12 col-md-10">
             <br>
             <div class="table-responsive">
@@ -44,6 +42,7 @@
         <div class="col-12 col-sm-12 col-md-10">
             <div class="form-group">
                 <form action="<%= reports_att_by_day_path(format: :xlsx) %>" method="get">
+                    <input type="hidden" readonly="true" class="form-control" name="date" value="<%= params[:date] %>">
                     <button class="btn btn-success btn-sm" type="submit" style="color: #ffffff;">Descargar CSV</button>
                 </form>
             </div>

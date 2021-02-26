@@ -1,9 +1,9 @@
 <div class="continer align-content-center ml-1 ml-sm-0 h-100" style="margin-top: 2rem;">
     <div class="row h-100 justify-content-center align-items-center">
-        <div class="col-12 col-sm-12 col-md-10">
-            <h4 class="justify-content-center align-items-center">Ausencias por mes</h4>
+        <div class="col-12 col-sm-12 col-md-7">
+            <h4 class="justify-content-center align-items-center">Ausencias por Día</h4>
         </div>
-        <!--form class="col-12 col-sm-12 col-md-3" action="<%= reports_absence_by_month_path %>" method="get">
+        <form class="col-12 col-sm-12 col-md-3" action="<%= reports_absence_by_day_path %>" method="get">
             <div class="row align-content-end ml-0 ml-sm-4">
                 <div class="form-group">
                     <input type="date" class="form-control" name="date" value="<%= params[:date] %>">
@@ -12,15 +12,14 @@
                     <button class="btn btn-secondary btn-sm ml-0 ml-3">BUSCAR</button>
                 </div>
             </div>
-        </form-->
+        </form>
         <div class="col-12 col-sm-12 col-md-10">
             <br>
             <div class="table-responsive">
                 <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th style="text-align: center;">Año</th>
-                            <th style="text-align: center;">Mes</th>
+                            <th style="text-align: center;">Fecha</th>
                             <th style="text-align: center;">Compañía</th>
                             <th style="text-align: center;">Entradas Registradas</th>
                             <th style="text-align: center;">Ausencias</th>
@@ -28,13 +27,13 @@
                     </thead>
                     <tbody>
                         <% @abscenes.each do |abscene| %>
-                            <% company = @companies.select{|company| company if company.id == abscene["company_id"]}.first %>
+                            <% company = @companies.select{|company| company if company.company_id == abscene.company_id}.first %>
+                            <% abscene_count = company.emp_count - abscene.emp_count %>
                             <tr>
-                                <td style="text-align: center;"><%=  abscene["yyyy"].to_s.split(".")[0] %></td>
-                                <td style="text-align: center;"><%=  abscene["mm"] %></td>
+                                <td style="text-align: center;"><%=  abscene.date %></td>
                                 <td style="text-align: center;"><%=  company.name %></td>
-                                <td style="text-align: center;"><%=  abscene["emp_count"].to_s.split(".")[0] %></td>
-                                <td style="text-align: center;"><%=  abscene["abs_count"].to_s.split(".")[0] %></td>
+                                <td style="text-align: center;"><%=  abscene.emp_count %></td>
+                                <td style="text-align: center;"><%=  (abscene_count > 0) ? abscene_count : "0" %></td>
                             </tr>
                         <% end %>
                     </tbody>
@@ -48,7 +47,8 @@
         </div>
         <div class="col-12 col-sm-12 col-md-10">
             <div class="form-group">
-                <form action="<%= reports_absence_by_month_path(format: :xlsx) %>" method="get">
+                <form action="<%= reports_absence_by_day_path(format: :xlsx) %>" method="get">
+                    <input type="hidden" readonly="true" class="form-control" name="date" value="<%= params[:date] %>">
                     <button class="btn btn-success btn-sm" type="submit" style="color: #ffffff;">Descargar CSV</button>
                 </form>
             </div>
