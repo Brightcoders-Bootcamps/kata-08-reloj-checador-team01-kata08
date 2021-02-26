@@ -12,7 +12,7 @@
             <li class="nav-item" id="companies_li">
                 <a class="nav-link" href="<%= companies_path %>">SUCURSALES <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item" id="employess_li">
+            <li class="nav-item" id="employees_li">
                 <a class="nav-link" href="<%= employees_path %>">EMPLEADOS</a>
             </li>
             <li class="nav-item dropdown" id="reports_li">
@@ -22,6 +22,7 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="<%= reports_att_by_day_path %>">Attendance by day</a>
                 <a class="dropdown-item" href="<%= reports_avg_time_by_employees_path %>">Average time employees checked in/out by month</a>
+                <a class="dropdown-item" href="<%= reports_absence_by_day_path %>">Absence report by day</a>
                 <a class="dropdown-item" href="<%= reports_absence_by_month_path %>">Absence report by month</a>
                 </div>
             </li>
@@ -44,20 +45,4 @@
 <div style="display: none">
     <input type="hidden" readonly="true" value="<%= controller.controller_name %>" id="controller_name">
 </div>
-
-<script>
-    controller_page = (document.getElementById("controller_name").value).toString();
-    switch (controller_page) {
-        case 'attendaces':
-            document.getElementById("attendaces_li").classList.add('active');
-            break;
-        case 'companies':
-            document.getElementById("companies_li").classList.add('active');
-            break;
-        case 'employees':
-            document.getElementById("employess_li").classList.add('active');
-            break;
-        default:
-            break;
-    }
-</script>
+<%= javascript_pack_tag 'layouts/navbar' %>

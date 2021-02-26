@@ -1,18 +1,21 @@
 class Attendace < ApplicationRecord
   validates :private_number, presence: true
 
-  def self.att_by_day(page = nil, per_page = nil)
+  def self.att_by_day(page = nil, per_page = nil, date)
     return (page == nil && per_page == nil) ?
-             Attendace.select("count(date) AS date_count, date").group("date") :
-             Attendace.select("count(date) AS date_count, date").group("date").paginate(page: page, per_page: per_page)
+             Attendace.select("count(date) AS date_count, date")
+                      .where("#{(!date.nil?) ? "date = '#{date}'" : ""}").group("date").order("date desc") :
+             Attendace.select("count(date) AS date_count, date")
+                      .where("#{(!date.nil?) ? "date = '#{date}'" : ""}").group("date").order("date desc")
+                      .group("date").order("date desc").paginate(page: page, per_page: per_page)
   end
 
   def self.avg_time_by_employees(page = nil, per_page = nil)
     sql = "SELECT 
             AVG_TIME_IN.mm,
             AVG_TIME_IN.yyyy,
-            TO_CHAR(AVG_TIME_IN.TIME_IN,'HH12:MI:SS') AS TIME_IN,
-            TO_CHAR(AVG_TIME_OUT.TIME_OUT,'HH12:MI:SS') AS TIME_OUT
+            TO_CHAR(AVG_TIME_IN.TIME_IN,'HH24:MI:SS') AS TIME_IN,
+            TO_CHAR(AVG_TIME_OUT.TIME_OUT,'HH24:MI:SS') AS TIME_OUT
           FROM
           (
             SELECT
@@ -40,16 +43,49 @@ class Attendace < ApplicationRecord
     return (page == nil && per_page == nil) ? Attendace.find_by_sql(sql) : Attendace.paginate_by_sql(sql, page: page, per_page: per_page)
   end
 
-  def self.absence_by_month(page = nil, per_page = nil, date = nil)
-    p "page #{page} per_page #{per_page}"
-    attendaces = Attendace.select("COUNT(DISTINCT attendaces.private_number) AS PER_DATE_COUNT, attendaces.date, COM.name, COM.id AS com_id")
-                          .joins("LEFT JOIN employees E ON attendaces.private_number = E.private_number")
-                          .joins("LEFT JOIN companies COM ON E.company_id = COM.id")
-                          .where("#{(!date.nil?) ? "attendaces.date = '#{date}'" : ""}")
-                          .group("attendaces.date, E.company_id, COM.id, COM.name, E.id, attendaces.private_number")
-                          .paginate(page: page, per_page: per_page)
+  def self.absence_by_day(page = nil, per_page = nil, date = nil)
+    abscenes = Attendace.select("COUNT(DISTINCT E.private_number) AS emp_count, date, E.company_id")
+      .joins("LEFT JOIN employees E ON attendaces.private_number = E.private_number")
+      .where("check_type = 'IN' #{(!date.nil?) ? "AND attendaces.date = '#{date}'" : ""}")
+      .group("E.company_id, date")
+    abscenes = (page == nil && per_page == nil) ? abscenes : abscenes.paginate(page: page, per_page: per_page)
+    companies = Employee.select("COUNT(DISTINCT employees.id) AS emp_count, employees.company_id, COM.name")
+      .joins("RIGHT JOIN companies COM ON employees.company_id = COM.id")
+      .where(company_id: abscenes.map { |att| att.company_id }.uniq)
+      .group("employees.company_id, COM.id")
+    return [abscenes, companies]
+  end
 
-    return attendaces
+  def self.absence_by_month(page = nil, per_page = nil)
+    sql = "SELECT
+            TO_CHAR(date, 'Mon') AS mm,
+            EXTRACT(year FROM date) AS yyyy,
+            SUM(abs_count) AS abs_count,
+            SUM(emp_count) AS emp_count,
+            company_id
+          FROM
+            (SELECT
+              date,
+              CASE
+                WHEN E.company_id IS NOT NULL
+                THEN
+                  (
+                    SELECT
+                    (COUNT(DISTINCT EMP.id)) - COUNT(DISTINCT E.private_number)
+                    FROM employees EMP
+                    WHERE EMP.company_id = E.company_id
+                  )
+                ELSE 0
+              END AS abs_count,
+              COUNT(DISTINCT E.private_number) AS emp_count,
+              E.company_id
+            FROM attendaces
+            LEFT JOIN employees E ON attendaces.private_number = E.private_number
+            WHERE (check_type = 'IN' )
+            GROUP BY E.company_id, date)X
+            GROUP BY 1,2,company_id
+            ORDER BY 1 ASC,2 DESC"
+    return (page == nil && per_page == nil) ? Attendace.find_by_sql(sql) : Attendace.paginate_by_sql(sql, page: page, per_page: per_page)
   end
 
   before_create :set_attendace_atts

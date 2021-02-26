@@ -56,6 +56,12 @@
           <%= render "body_table_attendaces", list_attendaces: @list_attendaces %>
         </tbody>
       </table>
+      <div class="media mb-4">
+        <div class="media-body">
+          <br>
+          <%= will_paginate @list_attendaces %>
+        </div>
+      </div>
     </div>
   </div>
   <div class="mt-5">
