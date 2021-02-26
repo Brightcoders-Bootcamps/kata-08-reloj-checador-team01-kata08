@@ -1,7 +1,12 @@
-require '../rails_helper'
+require "rails_helper"
 
 RSpec.describe Employee, type: :model do
-  company = Company.create(:name => "Company Name", :address => "Company Address")
+
+  # company = {FactoryBot.create(:company)}
+
+  let(:company) {
+    FactoryBot.create(:company)
+  }
 
   subject {
     described_class.new(id: 3,
