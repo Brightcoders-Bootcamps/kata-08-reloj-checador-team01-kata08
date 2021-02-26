@@ -44,13 +44,13 @@ class ReportsController < ApplicationController
     respond_to do |format|
       format.xlsx {
         @abscenes = Attendace.absence_by_month(nil, nil)
-        @companies = Company.all.where(id: @abscenes.map{|abs| abs.company_id}.sort.uniq)
+        @companies = Company.all.where(id: @abscenes.map { |abs| abs.company_id }.sort.uniq)
         filename = "AUSENCIAS por mes-#{DateTime.now.strftime("%d-%m-%Y %H:%M")}.xlsx"
         response.headers["Content-Disposition"] = "attachment; filename=\"#{filename}\""
       }
       format.html {
         @abscenes = Attendace.absence_by_month(params[:page], 10)
-        @companies = Company.all.where(id: @abscenes.map{|abs| abs.company_id}.sort.uniq)
+        @companies = Company.all.where(id: @abscenes.map { |abs| abs.company_id }.sort.uniq)
       }
     end
   end
