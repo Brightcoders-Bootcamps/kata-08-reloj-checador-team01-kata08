@@ -25,7 +25,7 @@ RSpec.describe "/companies", type: :request do
     FactoryBot.create(:company)
   }
 
-  let(:valid_attributes_for_cration) { { name: "Company Test 2", address: "Address Company Test 2" } }
+  let(:valid_attributes_for_creation) { { name: "Company Test 2", address: "Address Company Test 2" } }
 
   let(:invalid_attributes) { { name: nil, address: nil } }
 
@@ -73,12 +73,12 @@ RSpec.describe "/companies", type: :request do
     context "with valid parameters" do
       it "creates a new Company" do
         expect {
-          post companies_url, params: { company: valid_attributes_for_cration }
+          post companies_url, params: { company: valid_attributes_for_creation }
         }.to change(Company, :count).by(1)
       end
 
       it "redirects to the created company" do
-        post companies_url, params: { company: valid_attributes_for_cration }
+        post companies_url, params: { company: valid_attributes_for_creation }
         expect(response).to redirect_to(companies_url)
       end
     end
@@ -108,7 +108,7 @@ RSpec.describe "/companies", type: :request do
         patch company_url(company), params: { company: new_attributes }
         company.reload
         # skip("Add assertions for updated state")
-        expect(company.attributes).to include({ "name" => "Company Name updated" })
+        expect(company.attributes).to include({ "name" => "#{new_attributes[:name]}", "address" => "#{new_attributes[:address]}" })
       end
 
       it "redirects to the company" do
