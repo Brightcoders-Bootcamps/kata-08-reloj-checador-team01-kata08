@@ -3,11 +3,13 @@ class CompaniesController < ApplicationController
 
   # GET /companies or /companies.json
   def index
-    @companies = Company.all
+    @companies = Company.all.order("created_at ASC").paginate(page: params[:page], per_page: 15)
   end
 
   # GET /companies/1 or /companies/1.json
-  def show; end
+  def show
+    @employees = @company.employees.all.order("employees.created_at ASC").paginate(page: params[:page], per_page: 5)
+  end
 
   # GET /companies/new
   def new

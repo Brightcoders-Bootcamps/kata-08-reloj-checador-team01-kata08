@@ -3,7 +3,8 @@ class EmployeesController < ApplicationController
 
   # GET /employees or /employees.json
   def index
-    @employees = Employee.all
+    @employees = Employee.all.order(created_at: :desc).group("employees.company_id, id").paginate(page: params[:page], per_page: 15)
+    @companies = Company.where(id: @employees.pluck(:company_id).uniq.sort)
   end
 
   # GET /employees/1 or /employees/1.json

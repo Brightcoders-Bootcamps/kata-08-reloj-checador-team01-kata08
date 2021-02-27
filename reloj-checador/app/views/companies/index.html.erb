@@ -1,8 +1,5 @@
-<p id="notice"><%= notice %></p>
-
-
-<div class="container">
-  <h1 class="title">Companies</h1>
+<div class="container mt-3">
+  <h3 class="title">Companies</h3>
 
   <div class="content">
     <%= link_to 'New Company', new_company_path, :class => "btn btn-primary" %>
@@ -35,5 +32,11 @@
         <% end %>
       </tbody>
     </table>
+    <div class="media mb-4">
+      <div class="media-body">
+        <br>
+        <%= will_paginate @companies %>
+      </div>
+    </div>
   </div>
 </div>

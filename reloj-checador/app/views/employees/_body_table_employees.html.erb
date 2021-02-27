@@ -6,7 +6,7 @@
     <td><%= employee.position %></td>
     <td><%= employee.private_number %></td>
     <td><%= employee.active %></td>
-    <td><%= employee.company_id %></td>
+    <td><%= @companies.select{|com| com.id == employee.company_id}.first.name %></td>
     <td class="button-td">
       <%= link_to employee, :class => "btn btn-success" do %>
         <i class="fas fa-eye"></i>show 

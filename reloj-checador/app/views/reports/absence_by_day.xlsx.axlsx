@@ -1,6 +1,6 @@
 wb = xlsx_package.workbook
 
-wb.add_worksheet(name: "AUSENCIAS-POR-MES") do |sheet|
+wb.add_worksheet(name: "AUSENCIAS-POR-DIAS") do |sheet|
   header_style = sheet.styles.add_style("bg_color": "006c3b", "fg_color": "FFFFFF", b:true, alignment: { horizontal: :center, vertical: :center })
   wrap_text    = wb.styles.add_style({ "alignment": { horizontal: :center, vertical: :center, "wrap_text": true }})
   wrap_text_2  = wb.styles.add_style(:format_code => "@", "alignment": { horizontal: :center, vertical: :center, "wrap_text": true })
@@ -15,27 +15,25 @@ wb.add_worksheet(name: "AUSENCIAS-POR-MES") do |sheet|
 
   # Create the header row
   sheet.add_row [
-    'AÑO',
-    'MES',
+    'FECHA',
     'COMPAÑÍA',
     'ENTRADAS REGISTRADAS',
     'AUSENCIAS'
   ], style: header_style
   
   # Create entries for each item
-  @abscenes.each do |abscene|
-    company = @companies.select{|company| company if company.id == abscene["company_id"]}.first
+  @abscenes.order(date: :asc).each do |abscene|
+    company = @companies.select{|company| company if company.company_id == abscene.company_id}.first
+    abscene_count = company.emp_count - abscene.emp_count
     sheet.add_row [
-      "#{abscene["yyyy"].to_s.split(".")[0]}",    #A
-      abscene["mm"].to_s,                      #B
-      company.name.to_s,                       #C
-      abscene["emp_count"].to_s.split(".")[0], #D
-      abscene["abs_count"].to_s.split(".")[0]  #E
+      "#{abscene&.date.strftime('%Y-%m-%d')}", #A
+      company.name.to_s, #B,
+      abscene.emp_count, #C
+      "#{(abscene_count > 0) ? abscene_count : "0"}" #D
     ], style: [wrap_text,   #A
                wrap_text,   #B
                wrap_text,   #C
-               wrap_text,   #D
-               wrap_text    #E
+               wrap_text    #D
               ]
   end
 end

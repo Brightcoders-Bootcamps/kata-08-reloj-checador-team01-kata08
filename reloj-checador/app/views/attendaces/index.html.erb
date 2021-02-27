@@ -1,26 +1,31 @@
-<p id="notice"><%= notice %></p>
-<div class="container">
-  <h1 class="title">Attendaces</h1>
+<div class="container mt-3">
+  <h3 class="title">Attendaces</h3>
   <div class="content">
-  <div> 
-    <p>Total Attendances <strong><%= @attendaces_total%></strong></p>
-  </div>
-  <table class="table table-striped mt-4">
-    <thead>
-      <tr>
-        <th scope="col">ID attendace</th>
-        <th scope="col">Name</th>
-        <th scope="col">lastname</th>
-        <th scope="col">Ocupation</th>
-        <th scope="col"> Date</th>
-        <th scope="col">Hour</th>
-        <th scope="col">Check_type</th>
-      </tr>
-    </thead>
+    <div> 
+      <p>Total Attendances <strong><%= Attendace.count %></strong></p>
+    </div>
+    <table class="table table-striped mt-4">
+      <thead>
+        <tr>
+          <th scope="col">ID attendace</th>
+          <th scope="col">Name</th>
+          <th scope="col">lastname</th>
+          <th scope="col">Ocupation</th>
+          <th scope="col"> Date</th>
+          <th scope="col">Hour</th>
+          <th scope="col">Check_type</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      <%= render "body_table_attendaces", attendaces: @attendaces %>
-    </tbody>
-  </table>
+      <tbody>
+        <%= render "body_table_attendaces", attendaces: @attendaces %>
+      </tbody>
+    </table>
+    <div class="media mb-4">
+      <div class="media-body">
+        <br>
+        <%= will_paginate @attendaces %>
+      </div>
+    </div>
   </div>
 </div>

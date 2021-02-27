@@ -15,11 +15,4 @@
 
   <% end %>
 </div>
-
-<script>
-  var clock = document.getElementById("att-new-clock");
-  setInterval(() => {
-    let date = new Date()
-    clock.innerHTML = date.toLocaleTimeString();
-  },1000);
-</script>
+<%= javascript_pack_tag 'attendace/new_attendace' %>
