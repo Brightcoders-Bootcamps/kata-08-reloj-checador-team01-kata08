@@ -6,7 +6,7 @@ wb.add_worksheet(name: "ENTRADAS-SALIDAS") do |sheet|
   wrap_text_2  = wb.styles.add_style(:format_code => "@", "alignment": { horizontal: :center, vertical: :center, "wrap_text": true })
 
   sheet.add_row [
-    'Cantidad de entradas/salidas por día'
+    'Attendaces by day'
   ], style: header_style
 
   sheet.add_row [
@@ -15,8 +15,8 @@ wb.add_worksheet(name: "ENTRADAS-SALIDAS") do |sheet|
 
   # Create the header row
   sheet.add_row [
-    'FECHA',
-    'Nro. de entradas/salidas'
+    'DATE',
+    'IN/OUT NUMBERS'
   ], style: header_style
   
   # Create entries for each item

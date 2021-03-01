@@ -5,19 +5,19 @@
                 <div class="card-body">
                     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
                         <div class="form-group text-center" style="color: #807d77; margin-bottom: 2rem; margin-top: 1rem;">
-                          <h4>EDITAR PERFIL</h4>
+                          <h4>EDIT PROFILE</h4>
                         </div>
                         <div class="form-group">
                           <%= render "admins/shared/error_messages", resource: resource %>
                         </div>
                         <div class="form-group">
-                            <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-control text-center", style: "border-radius: 1rem; color: #807d77; margin-bottom: 2rem;", placeholder: "NOMBRES", required: "true" %>
+                            <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-control text-center", style: "border-radius: 1rem; color: #807d77; margin-bottom: 2rem;", placeholder: "NAME", required: "true" %>
                         </div>
                         <div class="form-group">
-                            <%= f.text_field :last_name, autofocus: true, autocomplete: "last_name", class: "form-control text-center", style: "border-radius: 1rem; color: #807d77; margin-bottom: 2rem;", placeholder: "APELLIDOS", required: "true" %>
+                            <%= f.text_field :last_name, autofocus: true, autocomplete: "last_name", class: "form-control text-center", style: "border-radius: 1rem; color: #807d77; margin-bottom: 2rem;", placeholder: "LASTNAME", required: "true" %>
                         </div>
                         <div class="form-group">
-                          <%= f.text_field :email, autofocus: true, autocomplete: "email", class: "form-control text-center", style: "border-radius: 1rem; color: #807d77; margin-bottom: 2rem;", placeholder: "CORREO", required: "true" %>
+                          <%= f.text_field :email, autofocus: true, autocomplete: "email", class: "form-control text-center", style: "border-radius: 1rem; color: #807d77; margin-bottom: 2rem;", placeholder: "EMAIL", required: "true" %>
                         </div>
                         <div class="form-group">
                           <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
@@ -25,23 +25,23 @@
                           <% end %>
                         </div>
                         <div class="form-group">
-                          <i>(dejar en blanco si no se cambiará la contraseña)</i>
-                          <%= f.password_field :password, autocomplete: "new-password", class: "form-control text-center", style: "border-radius: 1rem; color: #807d77;", placeholder: "NUEVA CONTRASEÑA" %>
+                          <i>(leave blank if the password will not be changed)</i>
+                          <%= f.password_field :password, autocomplete: "new-password", class: "form-control text-center", style: "border-radius: 1rem; color: #807d77;", placeholder: "NEW PASSWORD" %>
                           <% if @minimum_password_length %>
-                            <em>mínimo <%= @minimum_password_length %> caracteres</em>
+                            <em>min <%= @minimum_password_length %> characters</em>
                           <% end %>
                         </div>
 
                         <div class="form-group">
-                          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control text-center", style: "border-radius: 1rem; color: #807d77;", placeholder: "CONFIRMACIÓN NUEVA CONTRASEÑA" %>
+                          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control text-center", style: "border-radius: 1rem; color: #807d77;", placeholder: "NEW PASSWORD CONFIRMATION" %>
                         </div>
 
 
                         <div class="form-group">
-                          <i>(Nesecitamos tu contraseña para confirmar los cambios)</i>
-                          <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control text-center", style: "border-radius: 1rem; color: #807d77;", placeholder: "CONTRASEÑA", required: "true" %>
+                          <i>(We need your password to confirm the changes)</i>
+                          <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control text-center", style: "border-radius: 1rem; color: #807d77;", placeholder: "CURRENT PASSWORD", required: "true" %>
                         </div>
-                        <%= f.submit "ACTUALIZAR PERFIL", class: "form-control text-center", value: "ACTUALIZAR PERFIL", style: "color: #807d77; border-radius: 1rem;" %>
+                        <%= f.submit "UPDATE PROFILE", class: "form-control text-center", value: "UPDATE PROFILE", style: "color: #807d77; border-radius: 1rem;" %>
                     <% end %>
                 </div>
             </div>

@@ -21,7 +21,9 @@ RSpec.describe "/attendaces", type: :request do
 
   let!(:admin) { FactoryBot.create(:admin) }
 
-  let(:employee) { FactoryBot.create(:employee) }
+  let(:company) {FactoryBot.create(:company)}
+
+  let(:employee) { FactoryBot.create(:employee, company_id: company.id) }
 
   let(:valid_attributes) { FactoryBot.create(:attendace) }
 

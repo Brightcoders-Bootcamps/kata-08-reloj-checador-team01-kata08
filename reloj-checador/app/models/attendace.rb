@@ -4,9 +4,9 @@ class Attendace < ApplicationRecord
   def self.att_by_day(page = nil, per_page = nil, date)
     return (page == nil && per_page == nil) ?
              Attendace.select("count(date) AS date_count, date")
-                      .where("#{(!date.nil?) ? "date = '#{date}'" : ""}").group("date").order("date desc") :
+                      .where("#{(date.to_s.length > 0) ? "date = '#{date}'" : ""}").group("date").order("date desc") :
              Attendace.select("count(date) AS date_count, date")
-                      .where("#{(!date.nil?) ? "date = '#{date}'" : ""}").group("date").order("date desc")
+                      .where("#{(date.to_s.length > 0) ? "date = '#{date}'" : ""}").group("date").order("date desc")
                       .group("date").order("date desc").paginate(page: page, per_page: per_page)
   end
 
@@ -44,16 +44,16 @@ class Attendace < ApplicationRecord
   end
 
   def self.absence_by_day(page = nil, per_page = nil, date = nil)
-    abscenes = Attendace.select("COUNT(DISTINCT E.private_number) AS emp_count, date, E.company_id")
+    absences = Attendace.select("COUNT(DISTINCT E.private_number) AS emp_count, date, E.company_id")
       .joins("LEFT JOIN employees E ON attendaces.private_number = E.private_number")
-      .where("check_type = 'IN' #{(!date.nil?) ? "AND attendaces.date = '#{date}'" : ""}")
+      .where("check_type = 'IN' #{(date.to_s.length > 0) ? "AND attendaces.date = '#{date.to_s}'" : ""}")
       .group("E.company_id, date")
-    abscenes = (page == nil && per_page == nil) ? abscenes : abscenes.paginate(page: page, per_page: per_page)
+    absences = (page == nil && per_page == nil) ? absences : absences.paginate(page: page, per_page: per_page)
     companies = Employee.select("COUNT(DISTINCT employees.id) AS emp_count, employees.company_id, COM.name")
-      .joins("RIGHT JOIN companies COM ON employees.company_id = COM.id")
-      .where(company_id: abscenes.map { |att| att.company_id }.uniq)
-      .group("employees.company_id, COM.id")
-    return [abscenes, companies]
+                        .joins("RIGHT JOIN companies COM ON employees.company_id = COM.id")
+                        .where(company_id: absences.map { |att| att.company_id }.uniq)
+                        .group("employees.company_id, COM.id")
+    return [absences, companies]
   end
 
   def self.absence_by_month(page = nil, per_page = nil)

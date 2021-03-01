@@ -20,7 +20,7 @@ Company.all.each { |company|
                          lastname: name.split(" ")[1],
                          position: Faker::Job.title,
                          private_number: get_private_number(Employee.count),
-                         active: [true, false].sample,
+                         active: true,
                          company_id: company.id,
                        )
   }

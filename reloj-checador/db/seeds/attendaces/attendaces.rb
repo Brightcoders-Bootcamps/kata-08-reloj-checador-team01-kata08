@@ -1,4 +1,4 @@
-dates_arr = (Date.current - 2.month...Date.current + 1.month).to_a.map { |date| date.to_s }
+dates_arr = (Date.current - 3.month...Date.current + 1.day).to_a.map { |date| date.to_s }
 
 emp_arr = Employee.all.pluck(:private_number)
 global_emp_count = 0

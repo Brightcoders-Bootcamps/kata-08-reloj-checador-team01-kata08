@@ -9,9 +9,11 @@ class EmployeesController < ApplicationController
 
   # GET /employees/1 or /employees/1.json
   def show
-    @list_attendaces = Employee.select("A.id, A.date, A.time, A.check_type").
-      joins("JOIN attendaces A ON employees.private_number = A.private_number").
-      where(private_number: @employee.private_number)
+    @list_attendaces = Employee.select("A.id, A.date, A.time, A.check_type")
+                               .joins("JOIN attendaces A ON employees.private_number = A.private_number")
+                               .where(private_number: @employee.private_number)
+                               .order("A.id DESC")
+                               .paginate(page: params[:page], per_page: 15)
   end
 
   # GET /employees/new
@@ -50,22 +52,27 @@ class EmployeesController < ApplicationController
     @employee.active = false
     if @employee.save
       flash[:success] = "Employee was successfully inactivated."
-      redirect_to employees_url
     else
       flash[:error] = @employee.errors.full_messages
-      redirect_to employees_url
     end
+    redirect_to employees_url
   end
 
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_employee
-    @employee = Employee.find(params[:id])
+    @employee = Employee.find(params[:id]) rescue nil
+    employees_redirection if @employee.nil?
   end
 
   # Only allow a list of trusted parameters through.
   def employee_params
     params.require(:employee).permit(:email, :name, :lastname, :position, :private_number, :active, :company_id)
+  end
+
+  def employees_redirection
+    flash[:error] = 'Employee does not exist'
+    redirect_to employees_url
   end
 end

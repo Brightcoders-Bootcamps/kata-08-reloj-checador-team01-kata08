@@ -6,7 +6,7 @@ wb.add_worksheet(name: "AUSENCIAS-POR-DIAS") do |sheet|
   wrap_text_2  = wb.styles.add_style(:format_code => "@", "alignment": { horizontal: :center, vertical: :center, "wrap_text": true })
 
   sheet.add_row [
-    'Ausencias por mes'
+    'Absences by day'
   ], style: header_style
 
   sheet.add_row [
@@ -15,21 +15,21 @@ wb.add_worksheet(name: "AUSENCIAS-POR-DIAS") do |sheet|
 
   # Create the header row
   sheet.add_row [
-    'FECHA',
-    'COMPAÑÍA',
-    'ENTRADAS REGISTRADAS',
-    'AUSENCIAS'
+    'DATE',
+    'COMPANY',
+    'REGISTERED ENTRIES',
+    'ABSENCES'
   ], style: header_style
   
   # Create entries for each item
-  @abscenes.order(date: :asc).each do |abscene|
-    company = @companies.select{|company| company if company.company_id == abscene.company_id}.first
-    abscene_count = company.emp_count - abscene.emp_count
+  @absences.order(date: :asc).each do |absence|
+    company = @companies.select{|company| company if company.company_id == absence.company_id}.first
+    absence_count = company.emp_count - absence.emp_count
     sheet.add_row [
-      "#{abscene&.date.strftime('%Y-%m-%d')}", #A
+      "#{absence&.date.strftime('%Y-%m-%d')}", #A
       company.name.to_s, #B,
-      abscene.emp_count, #C
-      "#{(abscene_count > 0) ? abscene_count : "0"}" #D
+      absence.emp_count, #C
+      "#{(absence_count > 0) ? absence_count : "0"}" #D
     ], style: [wrap_text,   #A
                wrap_text,   #B
                wrap_text,   #C

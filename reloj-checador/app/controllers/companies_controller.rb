@@ -70,7 +70,7 @@ class CompaniesController < ApplicationController
   end
 
   def companies_redirection
-    flash[:error] = 'Company is not exist'
+    flash[:error] = 'Company does not exist'
     redirect_to companies_url
   end
 end
