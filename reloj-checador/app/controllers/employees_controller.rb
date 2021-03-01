@@ -9,11 +9,9 @@ class EmployeesController < ApplicationController
 
   # GET /employees/1 or /employees/1.json
   def show
-    @list_attendaces = Employee.select("A.id, A.date, A.time, A.check_type")
-                               .joins("JOIN attendaces A ON employees.private_number = A.private_number")
-                               .where(private_number: @employee.private_number)
-                               .order("A.id DESC")
-                               .paginate(page: params[:page], per_page: 15)
+    @list_attendaces = Employee.select("A.id, A.date, A.time, A.check_type").
+      joins("JOIN attendaces A ON employees.private_number = A.private_number").
+      where(private_number: @employee.private_number)
   end
 
   # GET /employees/new
@@ -27,28 +25,23 @@ class EmployeesController < ApplicationController
   # POST /employees or /employees.json
   def create
     @employee = Employee.new(employee_params)
-
-    respond_to do |format|
-      if @employee.save
-        format.html { redirect_to @employee, notice: "Employee was successfully created." }
-        format.json { render :show, status: :created, location: @employee }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @employee.errors, status: :unprocessable_entity }
-      end
+    if @employee.save
+      flash[:success] = "Employee was successfully created."
+      redirect_to employees_url
+    else
+      flash[:error] = @employee.errors.full_messages.join(" and ")
+      redirect_to new_employee_url(@employee)
     end
   end
 
   # PATCH/PUT /employees/1 or /employees/1.json
   def update
-    respond_to do |format|
-      if @employee.update(employee_params)
-        format.html { redirect_to @employee, notice: "Employee was successfully updated." }
-        format.json { render :show, status: :ok, location: @employee }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @employee.errors, status: :unprocessable_entity }
-      end
+    if @employee.update(employee_params)
+      flash[:success] = "Employee was successfully updated."
+      redirect_to employee_url(@employee)
+    else
+      flash[:error] = @employee.errors.full_messages.join(" and ")
+      render 'edit'
     end
   end
 
@@ -56,21 +49,23 @@ class EmployeesController < ApplicationController
   def destroy
     @employee.active = false
     if @employee.save
-     flash[:success] = "Employee was successfully inactivated."
+      flash[:success] = "Employee was successfully inactivated."
+      redirect_to employees_url
     else
-     flash[:error] = @employee.errors.full_messages
+      flash[:error] = @employee.errors.full_messages
+      redirect_to employees_url
     end
-    redirect_to employees_url
-   end
+  end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_employee
-      @employee = Employee.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def employee_params
-      params.require(:employee).permit(:email, :name, :lastname, :position, :private_number, :active, :company_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_employee
+    @employee = Employee.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def employee_params
+    params.require(:employee).permit(:email, :name, :lastname, :position, :private_number, :active, :company_id)
+  end
 end
