@@ -6,7 +6,7 @@ wb.add_worksheet(name: "AUSENCIAS-POR-MES") do |sheet|
   wrap_text_2  = wb.styles.add_style(:format_code => "@", "alignment": { horizontal: :center, vertical: :center, "wrap_text": true })
 
   sheet.add_row [
-    'Ausencias por mes'
+    'Absences by month'
   ], style: header_style
 
   sheet.add_row [
@@ -15,22 +15,22 @@ wb.add_worksheet(name: "AUSENCIAS-POR-MES") do |sheet|
 
   # Create the header row
   sheet.add_row [
-    'AÑO',
-    'MES',
-    'COMPAÑÍA',
-    'ENTRADAS REGISTRADAS',
-    'AUSENCIAS'
+    'YEAR',
+    'MONTH',
+    'COMPANY',
+    'REGISTERED ENTRIES',
+    'ABSENCES'
   ], style: header_style
   
   # Create entries for each item
-  @abscenes.each do |abscene|
-    company = @companies.select{|company| company if company.id == abscene["company_id"]}.first
+  @absences.each do |absence|
+    company = @companies.select{|company| company if company.id == absence["company_id"]}.first
     sheet.add_row [
-      "#{abscene["yyyy"].to_s.split(".")[0]}",    #A
-      abscene["mm"].to_s,                      #B
+      "#{absence["yyyy"].to_s.split(".")[0]}",    #A
+      absence["mm"].to_s,                      #B
       company.name.to_s,                       #C
-      abscene["emp_count"].to_s.split(".")[0], #D
-      abscene["abs_count"].to_s.split(".")[0]  #E
+      absence["emp_count"].to_s.split(".")[0], #D
+      absence["abs_count"].to_s.split(".")[0]  #E
     ], style: [wrap_text,   #A
                wrap_text,   #B
                wrap_text,   #C

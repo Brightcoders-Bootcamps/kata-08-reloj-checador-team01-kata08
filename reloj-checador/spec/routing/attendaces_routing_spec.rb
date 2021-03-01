@@ -14,10 +14,9 @@ RSpec.describe AttendacesController, type: :routing do
       expect(get: "/attendaces/1").to route_to("attendaces#show", id: "1")
     end
 
-    it "routes to #edit" do
-      expect(get: "/attendaces/1/edit").to route_to("attendaces#edit", id: "1")
-    end
-
+    # it "routes to #edit" do
+    #   expect(get: "/attendaces/1/edit").to route_to("attendaces#edit", id: "1")
+    # end
 
     it "routes to #create" do
       expect(post: "/attendaces").to route_to("attendaces#create")

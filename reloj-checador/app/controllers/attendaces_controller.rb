@@ -8,8 +8,6 @@ class AttendacesController < CheckinsController
                           .joins("JOIN attendaces A ON employees.private_number = A.private_number")
                           .order("A.id DESC")
                           .paginate(page: params[:page], per_page: 15)
-
-    @attendaces_total = @attendaces.length
   end
 
   # GET /attendaces/1 or /attendaces/1.json
@@ -29,7 +27,7 @@ class AttendacesController < CheckinsController
   def create
     @attendace = Attendace.new(attendace_params)
     employee = Employee.find_by(private_number: attendace_params[:private_number])
-    if !employee.nil?
+    if (!employee.nil? && (employee.active == true))
       if @attendace.save
         flash[:success] = "Employee #{employee.name} #{@attendace.check_type} registered"
         redirect_to new_attendace_path
@@ -38,7 +36,7 @@ class AttendacesController < CheckinsController
         render "new"
       end
     else
-      flash[:error] = "Private number not found"
+      flash[:error] = "Private number not found or Employee inactive"
       render "new"
     end
   end
@@ -60,7 +58,7 @@ class AttendacesController < CheckinsController
     else
       flash[:error] = @attendace.errors.full_messages
     end
-    render "index"
+    redirect_to @attendaces_path
   end
 
   private

@@ -17,12 +17,12 @@
                           <% if @minimum_password_length %>
                             <em>(<%= @minimum_password_length %> characters minimum)</em><br />
                           <% end %>
-                          <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "form-control text-center", style: "border-radius: 1rem; color: #807d77; margin-bottom: 2rem;", placeholder: "NUEVA CONTRASEÑA", required: "true"  %>
+                          <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "form-control text-center", style: "border-radius: 1rem; color: #807d77; margin-bottom: 2rem;", placeholder: "NEW PASSWORD", required: "true"  %>
                         </div>
                         <div class="form-group">
-                          <%= f.password_field :password_confirmation, autofocus: true, autocomplete: "new-password", class: "form-control text-center", style: "border-radius: 1rem; color: #807d77; margin-bottom: 2rem;", placeholder: "CONFIRMACIÓN NUEVA CONTRASEÑA", required: "true"  %>
+                          <%= f.password_field :password_confirmation, autofocus: true, autocomplete: "new-password", class: "form-control text-center", style: "border-radius: 1rem; color: #807d77; margin-bottom: 2rem;", placeholder: "NEW PASSWORD CONFIRMATION", required: "true"  %>
                         </div>
-                        <%= f.submit "CAMBIAR MI CONTRASEÑA", class: "form-control text-center", value: "CAMBIAR MI CONTRASEÑA", style: "color: #807d77; border-radius: 1rem;" %>
+                        <%= f.submit "CHANGE MY PASSWORD", class: "form-control text-center", value: "CHANGE MY PASSWORD", style: "color: #807d77; border-radius: 1rem;" %>
                     <% end %>
                 </div>
             </div>
